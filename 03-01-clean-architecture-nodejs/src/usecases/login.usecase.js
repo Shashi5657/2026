@@ -1,10 +1,10 @@
-const loginUser = ({ userRepo, passwordService, tokenService }) => {
+const loginUser = ({ userRepo, comparePassword, jwtSign }) => {
   return async function ({ email, password }) {
     const userExists = await userRepo.findByEmail({ email });
     if (!userExists) {
       throw new Error("Email doesn't exists, Please register");
     }
-    const isValidPassword = await passwordService.comparePassword(
+    const isValidPassword = await comparePassword(
       password,
       userExists.password
     );
@@ -13,6 +13,6 @@ const loginUser = ({ userRepo, passwordService, tokenService }) => {
       throw new Error("Invalid Password");
     }
 
-    return tokenService.sign({ userId: userExists._id });
+    return jwtSign({ userId: userExists._id });
   };
 };
