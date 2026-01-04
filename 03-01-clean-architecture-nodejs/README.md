@@ -336,7 +336,7 @@ export { authMiddleware };
 HTTP Request: POST /api/auth/register
   ↓
 ┌─────────────────────────────────────────────────┐
-│ Route Layer (auth.route.js)                      │
+│ Route Layer (auth.route.js)                     │
 │ - Receives request                              │
 │ - Passes to controller                          │
 └────────────────┬────────────────────────────────┘
