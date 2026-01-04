@@ -1,6 +1,6 @@
-const loginUser = ({ userRepo, comparePassword, jwtSign }) => {
+const loginUser = ({ userRepo, comparePassword, signJWT }) => {
   return async function ({ email, password }) {
-    const userExists = await userRepo.findByEmail({ email });
+    const userExists = await userRepo.findByEmail(email);
     if (!userExists) {
       throw new Error("Email doesn't exists, Please register");
     }
@@ -13,6 +13,8 @@ const loginUser = ({ userRepo, comparePassword, jwtSign }) => {
       throw new Error("Invalid Password");
     }
 
-    return jwtSign({ userId: userExists._id });
+    return signJWT({ userId: userExists._id });
   };
 };
+
+export { loginUser };
