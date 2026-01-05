@@ -1711,6 +1711,7 @@ your-project/
 ⚠ Folder name must be exact
 
 ### 3️⃣ Docker Hub Setup (One-Time)
+
 Step 1: Create Docker Hub Account
 
 👉 https://hub.docker.com/
@@ -1721,16 +1722,93 @@ Example:
 username/my-node-app
 
 ### 4️⃣ GitHub Secrets (VERY IMPORTANT 🔐)
+
 Why?
 Never hardcode credentials in code.
 
 Add Secrets in GitHub Repo
 
 Go to:
+
 > Repo → Settings → Secrets → Actions
 
 Add:
-| Secret Name       | Value                    |
+| Secret Name | Value |
 | ----------------- | ------------------------ |
 | `DOCKER_USERNAME` | your Docker Hub username |
-| `DOCKER_PASSWORD` | Docker Hub access token  |
+| `DOCKER_PASSWORD` | Docker Hub access token |
+
+### 5️⃣ Your First GitHub Actions Workflow
+
+📄 .github/workflows/docker.yml
+
+```
+name: Docker CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/my-node-app:latest .
+
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/my-node-app:latest
+```
+
+### 6️⃣ Understand Workflow Line by Line (CRITICAL)
+
+> 🔹 on: push
+> Runs pipeline when you push to main.
+
+🔹 runs-on
+
+> ubuntu-latest
+
+GitHub gives you a fresh Linux VM.
+
+🔹 actions/checkout
+
+Downloads your repository into the runner.
+
+🔹 Docker login
+
+Uses GitHub secrets securely.
+
+🔹 Build & Push
+
+Same Docker commands you run locally — but automated.
+
+🔥 If it works locally, it works in CI
+
+### 7️⃣ Trigger the Pipeline 🚀
+
+Just push code:
+
+```
+git add .
+git commit -m "Add CI/CD"
+git push origin main
+```
+
+What Happens?
+
+1️⃣ GitHub Actions starts
+2️⃣ Docker image builds
+3️⃣ Image pushed to Docker Hub
+4️⃣ Success ✅
