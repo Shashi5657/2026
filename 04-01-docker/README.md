@@ -1812,3 +1812,42 @@ What Happens?
 2️⃣ Docker image builds
 3️⃣ Image pushed to Docker Hub
 4️⃣ Success ✅
+
+## 🐳 Docker Interview Q&A (2–5 Years Experience)
+
+**Real Questions + Real Answers (No Theory Dump)**
+
+### 🔹 1. What is Docker?
+
+Answer (Short & Strong):
+Docker is a containerization platform that packages an application along with its dependencies into a container so it can run consistently across different environments.
+
+How to explain (1 line):
+
+> “Docker removes the ‘works on my machine’ problem by standardizing the runtime environment.”
+
+### 🔹 2. What is the difference between Docker Image and Container?
+
+| Docker Image         | Docker Container          |
+| -------------------- | ------------------------- |
+| Blueprint / template | Running instance          |
+| Read-only            | Read + write              |
+| Built once           | Can be created many times |
+
+Interview punchline:
+
+> “Image is what you build, container is what you run.”
+
+### 🔹 3. Why do we need Docker?
+
+Answer:
+
+- Environment consistency
+- Easy setup
+- Faster deployments
+- Microservices isolation
+- CI/CD automation
+
+Real-world line:
+
+> “Docker allows us to ship applications the same way we ship code.”

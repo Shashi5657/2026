@@ -13,7 +13,12 @@ const loginUser = ({ userRepo, comparePassword, signJWT }) => {
       throw new Error("Invalid Password");
     }
 
-    return signJWT({ userId: userExists._id });
+    const accessToken = signJWT({ userId: userExists._id });
+    const refreshToken = signJWT({ userId: userExists._id });
+
+    await userRepo.saveRefreshToken(user._id, refreshToken);
+
+    return { accessToken, refreshToken };
   };
 };
 

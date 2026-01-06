@@ -6,8 +6,18 @@ const signJWT = (payload) => {
   });
 };
 
+const signRefresh = (payload) => {
+  return jwt.sign(payload, process.env.SECRET_KEY, {
+    expiresIn: "7d",
+  });
+};
+
 const verifyJWT = (token) => {
   return jwt.verify(token, process.env.SECRET_KEY);
 };
 
-export { signJWT, verifyJWT };
+const verifyRefresh = (token) => {
+  return jwt.verify(token, process.env.SECRET_KEY);
+};
+
+export { signJWT, verifyJWT, signRefresh, verifyRefresh };
