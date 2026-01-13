@@ -4,14 +4,19 @@ import {
   Get,
   Header,
   HttpCode,
+  HttpException,
+  HttpStatus,
   Param,
   Post,
   Query,
   Redirect,
   Req,
+  UseFilters,
 } from '@nestjs/common';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { catsService } from './cats.service';
+import { error } from 'console';
+import { HttpExceptionFilter } from 'src/utils/http-exception.filter';
 
 //This is @controller decarator reqiure to define a basic controller
 @Controller('cats')
@@ -52,6 +57,25 @@ export class adminExample {
     return 'Admin page';
   }
 
+  @Post()
+  // async createNew() {
+  //   throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+  // }
+
+  //to throw custom exceptions
+  async createNew(error) {
+    throw new HttpException(
+      {
+        status: HttpStatus.FORBIDDEN,
+        error: 'This is a cutom message',
+      },
+      HttpStatus.FORBIDDEN,
+      {
+        cause: error,
+      },
+    );
+  }
+
   //async function always returns promises
   @Get()
   async findAll(): Promise<any[]> {
@@ -59,6 +83,7 @@ export class adminExample {
   }
 
   @Post()
+  @UseFilters(new HttpExceptionFilter())
   async create(@Body() createCatDto: CreateCatDto) {
     return 'this action adds a new cat';
   }
