@@ -5,19 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+      /* This is example of static or default css position */
       .card {
         width: 300px;
         padding: 16px;
         border: 1px solid #ddd;
         border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      /* Relative is often used only to support absolute children. */
+      .product-card {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        background-color: aquamarine;
+        border: 1px solid yellow;
+      }
+
+      .badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: crimson;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+      }
+
+      /* Absolute removes element from normal flow and positions relative to nearest positioned ancestor. */
+      /* custom tooltip example using positiona absolute */
+      .tooltip-wrapper {
+        position: relative;
+        display: inline-block;
+      }
+
+      .tooltip {
+        position: relative;
+        bottom: 120%;
+        left: 50%;
+        opacity: 0;
+        transform: translateX(-50%);
+        background: black;
+        color: white;
+        padding: 6px 10px;
+        border-radius: 4px;
+        transition: 0.2s ease;
+      }
+      .tooltip-wrapper:hover .tooltip {
+        opacity: 1;
+      }
+
+      /* position fixed */
+      .fab {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: royalblue;
+        color: white;
+        font-size: 24px;
+        border: none;
       }
     </style>
   </head>
   <body>
+    <!-- default static position -->
     <section class="card">
       <h2>Product Title</h2>
       <p>Product Description</p>
       <button>Button</button>
     </section>
+    <!-- example of  position relative -->
+    <div class="product-card">
+      <span class="badge">New</span>
+    </div>
+    <!-- example of position absolute & relative -->
+    <div class="tooltip-wrapper">
+      Hover me
+      <div class="tooltip">Tooltip Content</div>
+    </div>
+
+    <button class="fab">+</button>
   </body>
 </html>
