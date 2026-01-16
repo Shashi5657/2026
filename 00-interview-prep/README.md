@@ -10,3 +10,15 @@
 
 - CSS Specifity
   => inline styles > id > class > pseudo elements
+
+🔥 Architect-Level Summary
+| Keyword | Scope Type |
+| ------- | ----------- |
+| var | Function scoped |
+| let | Block scoped |
+| const | Block scoped |
+
+Important correction ❗
+
+❌ Not correct: "var is global scoped"
+✅ Correct: var is function scoped.
