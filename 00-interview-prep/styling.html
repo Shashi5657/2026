@@ -68,9 +68,25 @@
         font-size: 24px;
         border: none;
       }
+      /* sticky position styling */
+      .sticky-header {
+        position: sticky;
+        top: 0;
+        background: white;
+        padding: 16px;
+        border-bottom: 1px solid #ccc;
+        z-index: 100;
+      }
+
+      .content {
+        height: 2000px;
+      }
     </style>
   </head>
-  <body>
+  <body class="content">
+    <!-- example of position sticky  -->
+    <header class="sticky-header">navigation header</header>
+
     <!-- default static position -->
     <section class="card">
       <h2>Product Title</h2>
@@ -87,6 +103,7 @@
       <div class="tooltip">Tooltip Content</div>
     </div>
 
+    <!-- example of fixed position -->
     <button class="fab">+</button>
   </body>
 </html>
