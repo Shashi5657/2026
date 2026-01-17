@@ -20,5 +20,12 @@
 
 Important correction ❗
 
-❌ Not correct: "var is global scoped"
-✅ Correct: var is function scoped.
+var let & const comparision table
+
+| Feature       | var             | let       | const     |
+| ------------- | --------------- | --------- | --------- |
+| Scope         | Function        | Block     | Block     |
+| Hoisted       | Yes (undefined) | Yes (TDZ) | Yes (TDZ) |
+| Re-declare    | ✅ Yes          | ❌ No     | ❌ No     |
+| Re-assign     | ✅ Yes          | ✅ Yes    | ❌ No     |
+| Init required | ❌ No           | ❌ No     | ✅ Yes    |
