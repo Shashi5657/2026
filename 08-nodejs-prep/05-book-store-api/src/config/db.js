@@ -1,27 +1,28 @@
 import mongoose from "mongoose";
+import { ENV } from "./env";
 
-if (!process.env.MONGO_URI) {
+if (!ENV.MONGO_URI) {
   throw new Error("Please define MONGO_URI in env variable");
 }
+
 let isConnected = false;
 
 export const connectToDB = async () => {
   try {
     if (isConnected) {
-      console.log("Using existing database connection");
+      console.log("Using existing DB connection");
       return;
     }
-    const db = await mongoose.connect(process.env.MONGO_URI, {
+
+    const db = await mongoose.connect(ENV.MONGO_URI, {
       dbName: "book-store",
       autoIndex: false,
       maxPoolSize: 10,
     });
 
     isConnected = db.connections[0].readyState === 1;
-
-    console.log("MONGO DB connected successfully");
+    console.log("MONGO DB Connected Successfully");
   } catch (error) {
-    console.error("Mongo DB Connection failed:", error.message);
-    process.exit(1);
+    console.error("MONGODB Connection failed", error.message);
   }
 };
