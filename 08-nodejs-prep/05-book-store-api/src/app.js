@@ -15,3 +15,12 @@ app.use(express.json());
 if (ENV.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+//Health check Route
+
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+  });
+});
+export default app;
