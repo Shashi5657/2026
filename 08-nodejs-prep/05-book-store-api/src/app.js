@@ -23,4 +23,5 @@ app.get("/health", (req, res) => {
     status: "OK",
   });
 });
+
 export default app;
