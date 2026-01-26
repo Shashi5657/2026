@@ -2,6 +2,7 @@ import { configDotenv } from "dotenv";
 import app from "./app";
 import { connectToDB } from "./config/db";
 import { ENV } from "./config/env";
+import logger from "./config/logger";
 
 configDotenv();
 
@@ -13,10 +14,10 @@ const connectToServer = async () => {
   try {
     await connectToDB();
     server = app.listen(PORT, () => {
-      console.log(`🚀 Server running on PORT: ${PORT}`);
+      logger.info(`🚀 Server running on PORT: ${PORT}`);
     });
   } catch (error) {
-    console.error("❌ Server startup failed:", error);
+    logger.error("❌ Server startup failed:", error);
     process.exit(1); // Crash fast (production safe)
   }
 };

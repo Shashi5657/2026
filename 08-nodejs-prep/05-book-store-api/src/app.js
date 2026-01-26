@@ -12,10 +12,17 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-if (ENV.NODE_ENV === "development") {
+if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
+} else {
+  app.use(
+    morgan("combined", {
+      stream: {
+        write: (message) => logger.info(message.trim()),
+      },
+    }),
+  );
 }
-
 //Health check Route
 
 app.get("/health", (req, res) => {
