@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { ENV } from "./env";
+import { ENV } from "./env.js";
 
 if (!ENV.MONGO_URI) {
   throw new Error("Please define MONGO_URI in env variable");

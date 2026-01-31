@@ -2,7 +2,8 @@ import express from "express";
 import helmet from "helmet";
 import cors from "cors";
 import morgan from "morgan";
-import { ENV } from "./config/env";
+import { ENV } from "./config/env.js";
+import bookRoutes from "./modules/books/book.route.js";
 
 const app = express();
 
@@ -12,13 +13,13 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-if (process.env.NODE_ENV === "development") {
+if (ENV.NODE_ENV === "development") {
   app.use(morgan("dev"));
 } else {
   app.use(
     morgan("combined", {
       stream: {
-        write: (message) => logger.info(message.trim()),
+        write: (message) => console.log(message.trim()),
       },
     }),
   );
@@ -30,5 +31,8 @@ app.get("/health", (req, res) => {
     status: "OK",
   });
 });
+
+//routes
+app.use("/api/v1/books", bookRoutes);
 
 export default app;
