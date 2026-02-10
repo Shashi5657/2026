@@ -1,8 +1,8 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS } from "../../../theme/colors";
 import { TYPOGRAPHY } from "../../../theme/typography";
 import { SPACING } from "../../../theme/spacing";
+import { COLORS } from "../../../theme/colors";
 
 export default function HomeLayout() {
   return (
