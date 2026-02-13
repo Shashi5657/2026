@@ -69,11 +69,15 @@ const Home = () => {
           />
 
           <Text>Email Address</Text>
-          <TextInput
-            style={styles.textinput}
+          <InputField
+            label="Email Address"
             placeholder="Enter Your Email Address"
             keyboardType="email-address"
             autoCapitalize="none"
+            value={values.email}
+            onChangeText={(text) =>
+              setValues((prev) => ({ ...prev, email: text }))
+            }
           />
 
           <Text>Mobile Number</Text>

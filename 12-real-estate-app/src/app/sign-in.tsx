@@ -1,8 +1,10 @@
+import { login } from "@/services/appwrite";
 import { commonStyles } from "@/styles/commonStyles";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import {
+  Alert,
   Image,
   ImageBackground,
   Pressable,
@@ -20,7 +22,12 @@ const Signin = () => {
     setLoading(true);
 
     try {
-      // Google Login
+      const result = await login();
+      if (result) {
+        console.log("login success");
+      } else {
+        Alert.alert('Error', 'Failed to login')
+      }
     } finally {
       setLoading(false);
     }
