@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+type FormFields = "fullName" | "email" | "mobileNumber" | "password";
+
 const Home = () => {
   const [values, setValues] = useState({
     fullName: "",
@@ -19,7 +21,14 @@ const Home = () => {
     mobileNumber: "",
     password: "",
   });
-  console.log(values, ":values");
+
+  const handleTextChange = (text: string, field: FormFields) => {
+    setValues((prev) => ({ ...prev, [field]: text }));
+  };
+
+  const handleSaveValues = () => {
+    console.log(values, ":values");
+  };
 
   return (
     <SafeAreaView>
@@ -63,26 +72,22 @@ const Home = () => {
             autoCapitalize="words"
             placeholder="Enter Your Full Name"
             value={values.fullName}
-            onChangeText={(text) =>
-              setValues((prev) => ({ ...prev, fullName: text }))
-            }
+            onChangeText={(text) => handleTextChange(text, "fullName")}
           />
 
-          <Text>Email Address</Text>
           <InputField
             label="Email Address"
             placeholder="Enter Your Email Address"
             keyboardType="email-address"
             autoCapitalize="none"
             value={values.email}
-            onChangeText={(text) =>
-              setValues((prev) => ({ ...prev, email: text }))
-            }
+            onChangeText={(text) => handleTextChange(text, "email")}
           />
 
-          <Text>Mobile Number</Text>
-          <TextInput
-            style={styles.textinput}
+          <InputField
+            label="Mobile Number"
+            value={values.mobileNumber}
+            onChangeText={(text) => handleTextChange(text, "mobileNumber")}
             placeholder="Enter Your Mobile Number"
             keyboardType="phone-pad"
             maxLength={10}
@@ -100,7 +105,7 @@ const Home = () => {
         </View>
 
         <Pressable
-          onPress={() => console.log("clicked on Pressable component")}
+          onPress={() => handleSaveValues()}
           onLongPress={() => console.log("Long pressed")}
           style={({ pressed }) => [styles.button, pressed && styles.pressed]}
         >
