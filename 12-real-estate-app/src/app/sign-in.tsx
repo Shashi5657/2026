@@ -1,3 +1,4 @@
+import InputField from "@/components/InputField";
 import { login } from "@/services/appwrite";
 import { commonStyles } from "@/styles/commonStyles";
 import { Ionicons } from "@expo/vector-icons";
@@ -11,12 +12,29 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+type FormFields = "fullName" | "email" | "mobileNumber" | "password";
+
 const Signin = () => {
   const [loading, setLoading] = useState(false);
+  const [values, setValues] = useState({
+    fullName: "",
+    email: "",
+    mobileNumber: "",
+    password: "",
+  });
+
+  const handleTextChange = (text: string, field: FormFields) => {
+    setValues((prev) => ({ ...prev, [field]: text }));
+  };
+
+  const handleSaveValues = () => {
+    console.log(values, ":values");
+  };
 
   const handleLogin = async () => {
     setLoading(true);
@@ -26,7 +44,7 @@ const Signin = () => {
       if (result) {
         console.log("login success");
       } else {
-        Alert.alert('Error', 'Failed to login')
+        Alert.alert("Error", "Failed to login");
       }
     } finally {
       setLoading(false);
@@ -109,6 +127,56 @@ const Signin = () => {
           <Text style={styles.footerText}>
             By continuing, you agree to our Terms of Service and Privacy Policy.
           </Text>
+
+          <Text style={{ fontSize: 24, fontWeight: "bold", margin: 10 }}>
+            SignUp Guide
+          </Text>
+
+          <View>
+            <InputField
+              label="Full Name"
+              autoCapitalize="words"
+              placeholder="Enter Your Full Name"
+              value={values.fullName}
+              onChangeText={(text) => handleTextChange(text, "fullName")}
+            />
+
+            <InputField
+              label="Email Address"
+              placeholder="Enter Your Email Address"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              value={values.email}
+              onChangeText={(text) => handleTextChange(text, "email")}
+            />
+
+            <InputField
+              label="Mobile Number"
+              value={values.mobileNumber}
+              onChangeText={(text) => handleTextChange(text, "mobileNumber")}
+              placeholder="Enter Your Mobile Number"
+              keyboardType="phone-pad"
+              maxLength={10}
+            />
+
+            <Text>Password</Text>
+            <TextInput
+              secureTextEntry
+              style={styles.textinput}
+              placeholder="Enter Your Password"
+              keyboardType="default"
+            />
+            {/* <Text>Role: React Native Developer</Text>
+        <Text>Location: Hyderabad</Text> */}
+          </View>
+
+          <Pressable
+            onPress={() => handleSaveValues()}
+            onLongPress={() => console.log("Long pressed")}
+            style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+          >
+            <Text style={{ color: "black", fontWeight: "bold" }}>Sign up</Text>
+          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -236,5 +304,22 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#9CA3AF",
     lineHeight: 18,
+  },
+  textinput: {
+    borderWidth: 2,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 3,
+  },
+  button: {
+    padding: 10,
+    borderWidth: 2,
+    borderRadius: 10,
+    margin: 10,
+    backgroundColor: "#fcfc31",
+  },
+  pressed: {
+    opacity: 0.7,
   },
 });
