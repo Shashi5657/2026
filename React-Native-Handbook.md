@@ -1665,3 +1665,296 @@ Whenever state changes, React recalculates the UI.
 - Props changes trigger re-renders.
 - Normal variables do not trigger re-renders.
 - Re-rendering is normal and expected.
+
+# 16. Event Handling
+
+## What is Event Handling?
+
+Event handling is the process of responding to user interactions.
+
+Examples:
+
+- Button Presses
+- Text Input Changes
+- Long Presses
+- Gestures
+
+---
+
+## Event Flow
+
+```text
+User Action
+      ↓
+Event
+      ↓
+Handler
+      ↓
+Action
+```
+
+---
+
+## onPress
+
+```tsx
+<Pressable
+  onPress={() => {
+    console.log("Pressed");
+  }}
+>
+  <Text>Press Me</Text>
+</Pressable>
+```
+
+Runs when user taps.
+
+---
+
+## onLongPress
+
+```tsx
+onLongPress={() => {}}
+```
+
+Runs when user holds a component.
+
+---
+
+## onChangeText
+
+```tsx
+<TextInput
+  onChangeText={(text) => {
+    console.log(text);
+  }}
+/>
+```
+
+Runs whenever input changes.
+
+---
+
+## Callback Functions
+
+```tsx
+() => {
+  console.log("Hello");
+};
+```
+
+Callbacks are executed later when an event occurs.
+
+---
+
+## Handler Functions
+
+```tsx
+const handlePress = () => {
+  console.log("Pressed");
+};
+```
+
+```tsx
+<Pressable onPress={handlePress} />
+```
+
+---
+
+## Passing Parameters
+
+Wrong:
+
+```tsx
+onPress={handlePress()}
+```
+
+Correct:
+
+```tsx
+onPress={() =>
+  handlePress("Shashi")
+}
+```
+
+---
+
+## Common Mistakes
+
+### Wrong
+
+```tsx
+onPress={console.log("Hello")}
+```
+
+### Correct
+
+```tsx
+onPress={() =>
+  console.log("Hello")
+}
+```
+
+---
+
+## Key Takeaways
+
+- Events are user interactions.
+- Handlers respond to events.
+- Callbacks execute later.
+- onPress is the most common event.
+- onChangeText handles input changes.
+- Use function references instead of immediately executing functions.
+
+# 17. Lists (FlatList & SectionList)
+
+## Why Do We Need Lists?
+
+Lists allow rendering multiple items dynamically.
+
+Examples:
+
+- Properties
+- Products
+- Messages
+- Users
+- Notifications
+
+---
+
+## map()
+
+```tsx
+{
+  properties.map((property) => <Text>{property}</Text>);
+}
+```
+
+Useful for small lists.
+
+---
+
+## FlatList
+
+Optimized list component for React Native.
+
+```tsx
+<FlatList data={properties} renderItem={({ item }) => <Text>{item}</Text>} />
+```
+
+---
+
+## Important Props
+
+### data
+
+```tsx
+data = { properties };
+```
+
+Array to render.
+
+---
+
+### renderItem
+
+```tsx
+renderItem={({ item }) => (
+  <Text>{item}</Text>
+)}
+```
+
+Defines how each item appears.
+
+---
+
+### keyExtractor
+
+```tsx
+keyExtractor={(item) => item.id}
+```
+
+Provides unique keys.
+
+---
+
+### horizontal
+
+```tsx
+horizontal;
+```
+
+Creates horizontal lists.
+
+---
+
+### ListEmptyComponent
+
+```tsx
+ListEmptyComponent={
+  <Text>No Data</Text>
+}
+```
+
+Displayed when list is empty.
+
+---
+
+### ListHeaderComponent
+
+```tsx
+ListHeaderComponent={
+  <Text>Featured Properties</Text>
+}
+```
+
+Adds a header.
+
+---
+
+## Virtualization
+
+FlatList only renders visible items.
+
+Benefits:
+
+- Better performance
+- Lower memory usage
+- Faster scrolling
+
+---
+
+## SectionList
+
+Used for grouped lists.
+
+Example:
+
+```text
+Apartments
+  Luxury Apartment
+  Budget Apartment
+
+Villas
+  Luxury Villa
+  Farm Villa
+```
+
+---
+
+## FlatList vs SectionList
+
+| FlatList    | SectionList  |
+| ----------- | ------------ |
+| Single list | Grouped list |
+| Most common | Less common  |
+
+---
+
+## Key Takeaways
+
+- FlatList is the preferred way to render lists.
+- keyExtractor should provide unique IDs.
+- FlatList uses virtualization.
+- SectionList supports grouped data.
+- Use FlatList instead of map() for large datasets.
