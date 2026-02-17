@@ -146,29 +146,28 @@ export default function Home() {
         )}
         ListFooterComponent={() => (
           <View style={styles.footer}>
+            <SectionList
+              sections={propertySections}
+              keyExtractor={(item) => item.id}
+              renderSectionHeader={({ section }) => (
+                <Text style={styles.sectionHeader}>{section.title}</Text>
+              )}
+              renderItem={({ item }) => (
+                <View style={styles.sectionCard}>
+                  <Text>{item.title}</Text>
+                  <Text>{item.price}</Text>
+                </View>
+              )}
+            />
             <Link href="/Explore">Explore</Link>
             <Link href="/Profile">Profile</Link>
-            <Link href="./properties/1">Property</Link>
+            <Link href="./properties/5">Property</Link>
             <Link href="/sign-in">Signin</Link>
           </View>
         )}
         ListEmptyComponent={() => (
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyText}>No Properties Found</Text>
-          </View>
-        )}
-      />
-
-      <SectionList
-        sections={propertySections}
-        keyExtractor={(item) => item.id}
-        renderSectionHeader={({ section }) => (
-          <Text style={styles.sectionHeader}>{section.title}</Text>
-        )}
-        renderItem={({ item }) => (
-          <View style={styles.sectionCard}>
-            <Text>{item.title}</Text>
-            <Text>{item.price}</Text>
           </View>
         )}
       />
