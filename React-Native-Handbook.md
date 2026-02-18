@@ -1958,3 +1958,151 @@ Villas
 - FlatList uses virtualization.
 - SectionList supports grouped data.
 - Use FlatList instead of map() for large datasets.
+
+# 18. Navigation (Expo Router)
+
+## What is Navigation?
+
+Navigation is the process of moving between screens.
+
+Examples:
+
+- Home → Profile
+- Product List → Product Details
+- Properties → Property Details
+
+---
+
+## File-Based Routing
+
+Expo Router generates routes from files.
+
+```text
+app
+│
+├── index.tsx
+├── profile.tsx
+└── settings.tsx
+```
+
+Routes:
+
+```text
+/
+/profile
+/settings
+```
+
+---
+
+## router.push()
+
+```tsx
+router.push("/profile");
+```
+
+Navigates to a new screen.
+
+---
+
+## router.back()
+
+```tsx
+router.back();
+```
+
+Returns to previous screen.
+
+---
+
+## router.replace()
+
+```tsx
+router.replace("/home");
+```
+
+Replaces the current screen.
+
+---
+
+## Dynamic Routes
+
+File:
+
+```text
+app/property/[id].tsx
+```
+
+Routes:
+
+```text
+/property/1
+/property/2
+/property/3
+```
+
+---
+
+## Reading Route Params
+
+```tsx
+const { id } = useLocalSearchParams();
+```
+
+URL:
+
+```text
+/property/25
+```
+
+Result:
+
+```tsx
+id = "25";
+```
+
+---
+
+## \_layout.tsx
+
+Root navigation configuration.
+
+```tsx
+export default function Layout() {
+  return <Stack />;
+}
+```
+
+---
+
+## Tabs
+
+```tsx
+<Tabs />
+```
+
+Creates bottom tab navigation.
+
+---
+
+## Route Groups
+
+Folder:
+
+```text
+(tabs)
+```
+
+Used for organization and does not appear in URLs.
+
+---
+
+## Key Takeaways
+
+- Expo Router uses file-based routing.
+- Files automatically become routes.
+- router.push navigates forward.
+- router.back returns to previous screen.
+- router.replace replaces the current screen.
+- Dynamic routes use `[id].tsx`.
+- `_layout.tsx` configures navigation.
