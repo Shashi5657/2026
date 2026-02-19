@@ -1,4 +1,5 @@
 import { Link } from "expo-router";
+import { useEffect } from "react";
 import {
   View,
   Text,
@@ -122,6 +123,14 @@ const renderProperty = ({ item }: any) => (
 );
 
 export default function Home() {
+  useEffect(() => {
+    const timer = setInterval(() => {
+      console.log("Tick");
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FlatList

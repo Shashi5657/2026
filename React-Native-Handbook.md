@@ -2106,3 +2106,107 @@ Used for organization and does not appear in URLs.
 - router.replace replaces the current screen.
 - Dynamic routes use `[id].tsx`.
 - `_layout.tsx` configures navigation.
+
+# 19. Hooks - useEffect
+
+## What is useEffect?
+
+useEffect is a React Hook used to perform side effects.
+
+Examples:
+
+- API Calls
+- Timers
+- Event Listeners
+- Analytics
+- Permissions
+
+---
+
+## Basic Syntax
+
+```tsx
+useEffect(() => {
+  // effect
+}, []);
+```
+
+---
+
+## Dependency Array
+
+Controls when the effect runs.
+
+### No Dependency Array
+
+```tsx
+useEffect(() => {});
+```
+
+Runs after every render.
+
+---
+
+### Empty Dependency Array
+
+```tsx
+useEffect(() => {}, []);
+```
+
+Runs once after initial render.
+
+---
+
+### With Dependencies
+
+```tsx
+useEffect(() => {}, [count]);
+```
+
+Runs:
+
+- Initial Render
+- Whenever count changes
+
+---
+
+## API Call Example
+
+```tsx
+useEffect(() => {
+  fetchData();
+}, []);
+```
+
+---
+
+## Cleanup Function
+
+```tsx
+useEffect(() => {
+  return () => {
+    cleanup();
+  };
+}, []);
+```
+
+Runs when component unmounts.
+
+---
+
+## Common Uses
+
+- Fetching Data
+- Timers
+- Event Listeners
+- WebSocket Connections
+
+---
+
+## Key Takeaways
+
+- useEffect handles side effects.
+- Dependency array controls execution.
+- [] means run once.
+- [value] means run when value changes.
+- Cleanup prevents memory leaks.
