@@ -79,3 +79,4 @@ a = 10;
 // 🟢 let & const → Hoisted but in TDZ
 console.log(b); // ❌ ReferenceError
 let b = 20;
+
