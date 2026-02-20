@@ -2210,3 +2210,116 @@ Runs when component unmounts.
 - [] means run once.
 - [value] means run when value changes.
 - Cleanup prevents memory leaks.
+
+# 20. Component Lifecycle
+
+## What is Component Lifecycle?
+
+Every React component goes through three phases:
+
+```text
+Mount
+Update
+Unmount
+```
+
+---
+
+## Mount
+
+Component is created and added to the screen.
+
+```tsx
+useEffect(() => {
+  console.log("Mounted");
+}, []);
+```
+
+Runs once when component appears.
+
+---
+
+## Update
+
+Occurs when:
+
+- State changes
+- Props change
+
+Example:
+
+```tsx
+useEffect(() => {
+  console.log("Count Updated");
+}, [count]);
+```
+
+Runs whenever count changes.
+
+---
+
+## Unmount
+
+Occurs when component is removed from the screen.
+
+Example:
+
+```tsx
+useEffect(() => {
+  return () => {
+    console.log("Unmounted");
+  };
+}, []);
+```
+
+Runs cleanup before component is destroyed.
+
+---
+
+## Lifecycle Flow
+
+```text
+Mount
+ ↓
+Render
+ ↓
+Update
+ ↓
+Render
+ ↓
+Unmount
+ ↓
+Cleanup
+```
+
+---
+
+## Common Use Cases
+
+### Mount
+
+- API Calls
+- Permissions
+- Analytics
+
+### Update
+
+- Search
+- Filters
+- Form Validation
+
+### Unmount
+
+- Clear Timers
+- Remove Listeners
+- Close Connections
+
+---
+
+## Key Takeaways
+
+- Mount = Component appears.
+- Update = State/Props change.
+- Unmount = Component removed.
+- useEffect can handle all lifecycle phases.
+- Cleanup functions run during unmounting.
