@@ -2323,3 +2323,126 @@ Cleanup
 - Unmount = Component removed.
 - useEffect can handle all lifecycle phases.
 - Cleanup functions run during unmounting.
+
+# 21. React Performance Fundamentals
+
+## Why Do Re-renders Happen?
+
+React re-renders when:
+
+- State changes
+- Props change
+- Parent component re-renders
+
+Example:
+
+```text
+State Change
+      ↓
+Re-render
+      ↓
+Component Executes Again
+```
+
+---
+
+## Are Re-renders Bad?
+
+No.
+
+React is designed to re-render.
+
+Most re-renders are inexpensive and should not be optimized.
+
+---
+
+## When Do Performance Problems Happen?
+
+Performance issues appear when:
+
+- Large lists exist
+- Heavy calculations run repeatedly
+- Complex components re-render unnecessarily
+- Expensive functions execute frequently
+
+---
+
+## Optimization Goal
+
+```text
+Only update what actually changed
+```
+
+---
+
+## Memoization
+
+Memoization means:
+
+```text
+Remember previous result
+```
+
+Instead of recalculating values repeatedly.
+
+---
+
+## React Optimization Tools
+
+### React.memo
+
+Memoizes components.
+
+```tsx
+React.memo(Component);
+```
+
+---
+
+### useMemo
+
+Memoizes values.
+
+```tsx
+useMemo(...)
+```
+
+---
+
+### useCallback
+
+Memoizes functions.
+
+```tsx
+useCallback(...)
+```
+
+---
+
+## Senior Developer Rule
+
+Do not optimize everything.
+
+Ask:
+
+```text
+Is there an actual performance problem?
+```
+
+If not:
+
+```text
+Do nothing.
+```
+
+---
+
+## Key Takeaways
+
+- Re-renders are normal.
+- Optimization has its own cost.
+- Memoization means remembering results.
+- React.memo optimizes components.
+- useMemo optimizes values.
+- useCallback optimizes functions.
+- Measure first, optimize second.
