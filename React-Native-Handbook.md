@@ -2446,3 +2446,302 @@ Do nothing.
 - useMemo optimizes values.
 - useCallback optimizes functions.
 - Measure first, optimize second.
+
+# 22. Hooks - useMemo
+
+## What is useMemo?
+
+useMemo memoizes the result of a calculation and only recalculates it when dependencies change.
+
+Think:
+
+```text
+useMemo = Remember Calculation Result
+```
+
+---
+
+## Basic Syntax
+
+```tsx
+const value = useMemo(() => {
+  return calculation();
+}, []);
+```
+
+---
+
+## Dependency Array
+
+Controls when recalculation happens.
+
+```tsx
+useMemo(() => {
+  return calculation();
+}, [dependency]);
+```
+
+---
+
+## Real Example
+
+```tsx
+const filteredProperties = useMemo(() => {
+  return properties.filter((property) => property.title.includes(search));
+}, [properties, search]);
+```
+
+---
+
+## Good Use Cases
+
+- Filtering large arrays
+- Sorting data
+- Expensive calculations
+- Data transformations
+
+---
+
+## Bad Use Cases
+
+```tsx
+const title = useMemo(() => "Home", []);
+```
+
+```tsx
+const isAdmin = useMemo(() => true, []);
+```
+
+Simple values do not need memoization.
+
+---
+
+## useMemo vs useEffect
+
+### useMemo
+
+Stores calculated values.
+
+### useEffect
+
+Runs side effects.
+
+---
+
+## Key Takeaways
+
+- useMemo memoizes values.
+- Dependencies control recalculation.
+- Use for expensive calculations.
+- Avoid using it everywhere.
+- Optimization should solve real problems.
+
+# 23. Hooks - useCallback
+
+## What is useCallback?
+
+useCallback memoizes a function and returns the same function reference until dependencies change.
+
+Think:
+
+```text
+useCallback = Remember Function
+```
+
+---
+
+## Basic Syntax
+
+```tsx
+const handlePress = useCallback(() => {
+  console.log("Pressed");
+}, []);
+```
+
+---
+
+## Why useCallback?
+
+Without useCallback:
+
+```tsx
+const handlePress = () => {};
+```
+
+A new function is created on every render.
+
+With useCallback:
+
+```tsx
+const handlePress = useCallback(() => {}, []);
+```
+
+The same function reference is reused.
+
+---
+
+## Dependency Array
+
+```tsx
+const handleSearch = useCallback(() => {
+  console.log(search);
+}, [search]);
+```
+
+A new function is created only when dependencies change.
+
+---
+
+## useMemo vs useCallback
+
+### useMemo
+
+Memoizes values.
+
+```tsx
+const filteredData =
+  useMemo(...);
+```
+
+### useCallback
+
+Memoizes functions.
+
+```tsx
+const handlePress =
+  useCallback(...);
+```
+
+---
+
+## Good Use Cases
+
+- React.memo components
+- FlatList item callbacks
+- Expensive child components
+
+---
+
+## Bad Use Cases
+
+- Small components
+- Simple apps
+- Every button click handler
+
+---
+
+## Key Takeaways
+
+- useCallback memoizes functions.
+- Dependencies control when functions are recreated.
+- Most useful with React.memo.
+- Does not automatically improve performance.
+- Use only when there is a real optimization need.
+
+# 24. React.memo
+
+## What is React.memo?
+
+React.memo memoizes a component and prevents unnecessary re-renders when props have not changed.
+
+Think:
+
+```text
+React.memo = Remember Component
+```
+
+---
+
+## Basic Syntax
+
+```tsx
+const UserCard = React.memo(({ name }) => {
+  return <Text>{name}</Text>;
+});
+```
+
+---
+
+## How It Works
+
+React checks:
+
+```text
+Did Props Change?
+```
+
+If:
+
+```text
+No
+```
+
+Skip render.
+
+If:
+
+```text
+Yes
+```
+
+Render component.
+
+---
+
+## React.memo + useCallback
+
+```tsx
+const handlePress = useCallback(() => {
+  console.log("Pressed");
+}, []);
+```
+
+Provides stable function references.
+
+---
+
+## React.memo + useMemo
+
+```tsx
+const filteredData = useMemo(() => {
+  return expensiveCalculation();
+}, []);
+```
+
+Provides stable value references.
+
+---
+
+## Common Pitfall
+
+Objects and functions create new references.
+
+```tsx
+<UserCard
+  style={{
+    margin: 10,
+  }}
+/>
+```
+
+Causes re-renders.
+
+---
+
+## Good Use Cases
+
+- FlatList items
+- Product Cards
+- Property Cards
+- Chat Messages
+- Expensive Components
+
+---
+
+## Key Takeaways
+
+- React.memo memoizes components.
+- Props are shallowly compared.
+- useCallback stabilizes functions.
+- useMemo stabilizes values.
+- Optimize only when necessary.
