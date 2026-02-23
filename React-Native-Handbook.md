@@ -2745,3 +2745,139 @@ Causes re-renders.
 - useCallback stabilizes functions.
 - useMemo stabilizes values.
 - Optimize only when necessary.
+
+# 25. API Calls & Data Fetching
+
+## What is an API?
+
+API allows frontend and backend systems to communicate.
+
+```text
+Frontend
+    ↓
+Request
+    ↓
+Backend
+    ↓
+Response
+    ↓
+Frontend
+```
+
+---
+
+## Fetch API
+
+```tsx
+const response = await fetch(url);
+
+const data = await response.json();
+```
+
+---
+
+## Why async/await?
+
+API requests take time.
+
+async/await allows JavaScript to wait without blocking the UI.
+
+---
+
+## useEffect for Data Fetching
+
+```tsx
+useEffect(() => {
+  fetchData();
+}, []);
+```
+
+Runs once when the screen mounts.
+
+---
+
+## Three States of Data Fetching
+
+### Loading
+
+```tsx
+const [loading, setLoading];
+```
+
+### Success
+
+```tsx
+const [data, setData];
+```
+
+### Error
+
+```tsx
+const [error, setError];
+```
+
+---
+
+## Enterprise Pattern
+
+```tsx
+try {
+  setLoading(true);
+
+  const response = await fetch(url);
+
+  const data = await response.json();
+
+  setData(data);
+} catch (err) {
+  setError("Failed");
+} finally {
+  setLoading(false);
+}
+```
+
+---
+
+## HTTP Status Codes
+
+```text
+200 OK
+201 Created
+401 Unauthorized
+403 Forbidden
+404 Not Found
+500 Server Error
+```
+
+---
+
+## Common Mistakes
+
+### Wrong
+
+```tsx
+useEffect(() => {
+  fetchData();
+});
+```
+
+Causes infinite requests.
+
+### Correct
+
+```tsx
+useEffect(() => {
+  fetchData();
+}, []);
+```
+
+---
+
+## Key Takeaways
+
+- APIs provide backend data.
+- fetch() sends requests.
+- response.json() converts JSON.
+- Always handle Loading, Success, and Error states.
+- Use useEffect for initial fetching.
+- Check response.ok.
