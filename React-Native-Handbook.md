@@ -2881,3 +2881,201 @@ useEffect(() => {
 - Always handle Loading, Success, and Error states.
 - Use useEffect for initial fetching.
 - Check response.ok.
+
+# 26. State Management Fundamentals
+
+## Local State
+
+Local state belongs to a single component.
+
+```tsx
+const [count, setCount] = useState(0);
+```
+
+---
+
+## Problem: Prop Drilling
+
+Passing props through multiple levels of components.
+
+Example:
+
+```text
+App
+ ↓
+Screen
+ ↓
+Layout
+ ↓
+Header
+```
+
+Only Header needs the data, but all components pass it.
+
+---
+
+## Global State
+
+Global state can be accessed throughout the application.
+
+Examples:
+
+- User Information
+- Theme
+- Authentication
+- Language
+
+---
+
+## Context API
+
+React's built-in solution for shared state.
+
+Flow:
+
+```text
+Create Context
+      ↓
+Provide Context
+      ↓
+Consume Context
+```
+
+---
+
+## When To Use Context
+
+Good for:
+
+- User Data
+- Authentication
+- Theme
+- Language
+
+---
+
+## State Management Evolution
+
+```text
+useState
+    ↓
+Context API
+    ↓
+Redux Toolkit
+    ↓
+TanStack Query
+```
+
+---
+
+## Key Takeaways
+
+- useState handles local state.
+- Prop drilling becomes painful in large apps.
+- Context API solves simple shared-state problems.
+- Redux Toolkit handles complex app state.
+- TanStack Query manages server state.
+
+# 27. Context API
+
+## What is Context API?
+
+Context API allows data to be shared across the application without prop drilling.
+
+Think:
+
+```text
+Context = Global Storage
+```
+
+---
+
+## Three Parts of Context
+
+```text
+createContext
+      ↓
+Provider
+      ↓
+useContext
+```
+
+---
+
+## Create Context
+
+```tsx
+export const AuthContext = createContext(null);
+```
+
+---
+
+## Provider
+
+```tsx
+<AuthContext.Provider
+  value={{
+    user,
+    login,
+    logout,
+  }}
+>
+  {children}
+</AuthContext.Provider>
+```
+
+Provides data to descendants.
+
+---
+
+## Consume Context
+
+```tsx
+const auth = useContext(AuthContext);
+```
+
+Access shared data.
+
+---
+
+## Custom Hook Pattern
+
+```tsx
+export function useAuth() {
+  return useContext(AuthContext);
+}
+```
+
+Usage:
+
+```tsx
+const { user } = useAuth();
+```
+
+---
+
+## Good Context Use Cases
+
+- Authentication
+- Theme
+- Language
+- Permissions
+
+---
+
+## Context vs Props
+
+| Props          | Context       |
+| -------------- | ------------- |
+| Parent → Child | Global Access |
+| Small Scope    | Shared State  |
+
+---
+
+## Key Takeaways
+
+- Context solves prop drilling.
+- Provider supplies data.
+- useContext consumes data.
+- Custom hooks improve readability.
+- Best for shared application state.

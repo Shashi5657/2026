@@ -1,10 +1,12 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "./_layout";
 
 const Explore = () => {
+  const { userName } = useContext(UserContext);
   return (
     <View>
-      <Text>Explore</Text>
+      <Text>Explore {userName}</Text>
     </View>
   );
 };

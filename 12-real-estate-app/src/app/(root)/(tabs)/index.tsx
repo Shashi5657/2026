@@ -1,5 +1,5 @@
 import { Link } from "expo-router";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,8 +8,10 @@ import {
   ImageBackground,
   FlatList,
   SectionList,
+  Pressable,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useAuth, UserContext } from "./_layout";
 
 const properties = [
   {
@@ -123,6 +125,7 @@ const renderProperty = ({ item }: any) => (
 );
 
 export default function Home() {
+  const { user, login } = useAuth();
   useEffect(() => {
     const timer = setInterval(() => {
       console.log("Tick");
@@ -151,6 +154,10 @@ export default function Home() {
               style={styles.logo}
               resizeMode="contain"
             />
+            <Text>{userName}</Text>
+            <Pressable onPress={() => setUserName("Shashi")}>
+              <Text> Change Name</Text>
+            </Pressable>
           </ImageBackground>
         )}
         ListFooterComponent={() => (
