@@ -3079,3 +3079,145 @@ const { user } = useAuth();
 - useContext consumes data.
 - Custom hooks improve readability.
 - Best for shared application state.
+
+# 28. Redux Toolkit Fundamentals
+
+## Why Redux?
+
+Redux provides centralized state management for large applications.
+
+---
+
+## Redux Core Concepts
+
+```text
+Store
+State
+Action
+Reducer
+Dispatch
+```
+
+---
+
+## Store
+
+Global container for application state.
+
+Example:
+
+```tsx
+{
+  auth: {},
+  favorites: [],
+  properties: []
+}
+```
+
+---
+
+## Action
+
+Describes what happened.
+
+Example:
+
+```tsx
+{
+  type: "LOGIN";
+}
+```
+
+---
+
+## Reducer
+
+Updates state based on actions.
+
+Example:
+
+```tsx
+increment(state) {
+  state.count += 1;
+}
+```
+
+---
+
+## Slice
+
+Feature-specific state management.
+
+Example:
+
+```tsx
+createSlice({
+  name: "counter",
+  initialState: {
+    count: 0,
+  },
+  reducers: {
+    increment(state) {
+      state.count += 1;
+    },
+  },
+});
+```
+
+---
+
+## Store Setup
+
+```tsx
+configureStore({
+  reducer: {
+    counter: counterReducer,
+  },
+});
+```
+
+---
+
+## useSelector
+
+Reads state.
+
+```tsx
+const count = useSelector((state) => state.counter.count);
+```
+
+---
+
+## useDispatch
+
+Updates state.
+
+```tsx
+dispatch(increment());
+```
+
+---
+
+## Redux Flow
+
+```text
+Dispatch
+    ↓
+Action
+    ↓
+Reducer
+    ↓
+Store Update
+    ↓
+UI Update
+```
+
+---
+
+## Key Takeaways
+
+- Redux centralizes state.
+- Redux Toolkit simplifies Redux.
+- Slices organize state by feature.
+- useSelector reads state.
+- useDispatch updates state.

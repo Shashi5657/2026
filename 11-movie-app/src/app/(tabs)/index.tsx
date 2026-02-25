@@ -69,7 +69,7 @@ export default function Index() {
       const newMovies = await fetchMovies({
         query: "",
         page: nextPage,
-      });
+      }); 
 
       setMovies((prev) => [...prev, ...newMovies]);
       setPage(nextPage);
