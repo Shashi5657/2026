@@ -3221,3 +3221,125 @@ UI Update
 - Slices organize state by feature.
 - useSelector reads state.
 - useDispatch updates state.
+
+# 29. TanStack Query Fundamentals
+
+## Server State vs Client State
+
+### Client State
+
+Managed by the application.
+
+Examples:
+
+- Theme
+- Language
+- UI State
+
+### Server State
+
+Comes from backend APIs.
+
+Examples:
+
+- Properties
+- Orders
+- Users
+- Messages
+
+---
+
+## Why TanStack Query?
+
+Provides:
+
+- Caching
+- Loading States
+- Error States
+- Refetching
+- Retries
+- Pagination
+- Infinite Scroll
+
+---
+
+## useQuery
+
+```tsx
+const { data, isLoading, error } = useQuery({
+  queryKey: ["properties"],
+  queryFn: fetchProperties,
+});
+```
+
+---
+
+## queryKey
+
+Unique identifier for cached data.
+
+```tsx
+["properties"];
+```
+
+---
+
+## queryFn
+
+Function that fetches data.
+
+```tsx
+queryFn: fetchProperties;
+```
+
+---
+
+## Mutations
+
+Used for:
+
+- Create
+- Update
+- Delete
+
+```tsx
+const mutation = useMutation({
+  mutationFn: createProperty,
+});
+```
+
+---
+
+## Invalidation
+
+```tsx
+queryClient.invalidateQueries({
+  queryKey: ["properties"],
+});
+```
+
+Marks cached data as stale and refetches.
+
+---
+
+## Modern Architecture
+
+```text
+Context
+   ↓
+Auth / Theme
+
+TanStack Query
+   ↓
+Server Data
+```
+
+---
+
+## Key Takeaways
+
+- TanStack Query manages server state.
+- useQuery fetches and caches data.
+- useMutation updates server data.
+- queryKey identifies cached data.
+- invalidateQueries refreshes stale data.
