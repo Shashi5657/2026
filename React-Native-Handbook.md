@@ -3343,3 +3343,126 @@ Server Data
 - useMutation updates server data.
 - queryKey identifies cached data.
 - invalidateQueries refreshes stale data.
+
+# 30. Forms Fundamentals
+
+## What is a Form?
+
+A form collects user input and submits data.
+
+Examples:
+
+- Login
+- Signup
+- Profile Edit
+- Create Property
+
+---
+
+## Controlled Components
+
+```tsx
+<TextInput value={email} onChangeText={setEmail} />
+```
+
+React controls the value.
+
+---
+
+## Validation
+
+Examples:
+
+- Required Fields
+- Email Format
+- Password Length
+
+Manual example:
+
+```tsx
+if (!email) {
+  return;
+}
+```
+
+---
+
+## React Hook Form
+
+Industry-standard form library.
+
+```tsx
+const { control, handleSubmit } = useForm();
+```
+
+---
+
+## Controller
+
+Connects React Native inputs to React Hook Form.
+
+```tsx
+<Controller control={control} name="email" />
+```
+
+---
+
+## Submission
+
+```tsx
+handleSubmit(onSubmit);
+```
+
+Collects validated form data.
+
+---
+
+## Validation Libraries
+
+### Yup
+
+```tsx
+Yup.object({
+  email: Yup.string().email().required(),
+});
+```
+
+### Zod
+
+TypeScript-friendly alternative.
+
+---
+
+## Recommended Stack
+
+```text
+React Hook Form
++
+Zod
+```
+
+---
+
+## Form Flow
+
+```text
+Input
+  ↓
+Validation
+  ↓
+Submission
+  ↓
+API
+  ↓
+Success/Error
+```
+
+---
+
+## Key Takeaways
+
+- Controlled inputs are managed by React.
+- Validation ensures data quality.
+- React Hook Form simplifies forms.
+- Yup and Zod handle validation.
+- Every form collects, validates, and submits data.
