@@ -5,6 +5,7 @@ import morgan from "morgan";
 import { errorHandler } from "./middlewares/errorHandler";
 import { swaggerSpec } from "./config/swagger";
 import swaggerUi from "swagger-ui-express";
+import authRoutes from "./routes/auth.route"
 
 const app = express();
 
@@ -32,6 +33,8 @@ app.get("/health", (_, res) => {
     message: "Server Running",
   });
 });
+
+app.use("/api/v1/auth", authRoutes)
 
 app.use("*", (req, res) => {
   res.status(404).json({
