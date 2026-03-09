@@ -5,7 +5,7 @@ import morgan from "morgan";
 import { errorHandler } from "./middlewares/errorHandler";
 import { swaggerSpec } from "./config/swagger";
 import swaggerUi from "swagger-ui-express";
-import authRoutes from "./routes/auth.route"
+import authRoutes from "./routes/auth.route";
 
 const app = express();
 
@@ -34,9 +34,9 @@ app.get("/health", (_, res) => {
   });
 });
 
-app.use("/api/v1/auth", authRoutes)
+app.use("/api/v1/auth", authRoutes);
 
-app.use("*", (req, res) => {
+app.all("/{*splat}", (req, res) => {
   res.status(404).json({
     success: false,
     message: `Route ${req.originalUrl} not found`,
