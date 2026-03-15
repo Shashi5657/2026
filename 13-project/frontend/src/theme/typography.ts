@@ -1,4 +1,5 @@
-export const typography = {
+import { TextStyle } from "react-native";
+export const typography: Record<string, TextStyle> = {
   h1: {
     fontSize: 32,
     fontWeight: "700",
