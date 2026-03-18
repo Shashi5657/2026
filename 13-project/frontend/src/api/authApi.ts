@@ -8,7 +8,7 @@ export const loginApi = async (data: { email: string; password: string }) => {
 export const signupApi = async (data: {
   name: string;
   email: string;
-  passworc: string;
+  password: string;
 }) => {
   const respone = await axiosInstance.post("/auth/signup", data);
   return respone.data;

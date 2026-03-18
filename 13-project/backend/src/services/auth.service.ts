@@ -33,6 +33,7 @@ export const signup = async (payload: SignupPayload) => {
       createdAt: true,
     },
   });
+  return user;
 };
 
 export const login = async (paylod: LoginPayload) => {

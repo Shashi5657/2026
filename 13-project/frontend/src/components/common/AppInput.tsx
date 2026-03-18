@@ -6,8 +6,8 @@ type Props = {
   value: string;
   onChangeText: (text: string) => void;
   placeholder: string;
-  secureTextEntry: boolean;
-  error: string;
+  secureTextEntry?: boolean;
+  error: string | undefined;
 };
 
 export const AppInput = ({
