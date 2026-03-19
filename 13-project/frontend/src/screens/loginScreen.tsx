@@ -10,6 +10,8 @@ import { useLogin } from "@/hooks/useLogin";
 import { AppInput } from "@/components/common/AppInput";
 import PrimaryButton from "@/components/PrimaryButton";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { saveAccessToken } from "@/services/authStorage";
+import { router } from "expo-router";
 
 export default function LoginScreen() {
   const loginMutation = useLogin();
@@ -24,8 +26,12 @@ export default function LoginScreen() {
 
   const onSubmit = (data: LoginFormData) => {
     loginMutation.mutate(data, {
-      onSuccess: (response) => {
-        console.log(response);
+      onSuccess: async (response) => {
+        const token = response.data.accessToken;
+
+        await saveAccessToken(token);
+
+        router.replace("/dashboard");
       },
 
       onError: (error) => {
