@@ -7,11 +7,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, LoginFormData } from "@/schemas/loginSchema";
 
 import { useLogin } from "@/hooks/useLogin";
-import { AppInput } from "@/components/common/AppInput";
 import PrimaryButton from "@/components/PrimaryButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { saveAccessToken } from "@/services/authStorage";
 import { router } from "expo-router";
+import AppInput from "@/components/common/AppInput";
 
 export default function LoginScreen() {
   const loginMutation = useLogin();
@@ -63,10 +63,13 @@ export default function LoginScreen() {
         render={({ field }) => (
           <AppInput
             label="Email"
-            value={field.value || ""}
+            placeholder="Enter email"
+            value={field.value}
             onChangeText={field.onChange}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            leftIcon="mail-outline"
             error={errors.email?.message}
-            placeholder="Email"
           />
         )}
       />
@@ -77,11 +80,12 @@ export default function LoginScreen() {
         render={({ field }) => (
           <AppInput
             label="Password"
-            value={field.value || ""}
+            placeholder="Enter password"
+            value={field.value}
             onChangeText={field.onChange}
             secureTextEntry
+            leftIcon="lock-closed-outline"
             error={errors.password?.message}
-            placeholder="Password"
           />
         )}
       />

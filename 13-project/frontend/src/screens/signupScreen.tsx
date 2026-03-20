@@ -95,6 +95,21 @@ export default function SignupScreen() {
         )}
       />
 
+      <Controller
+        control={control}
+        name="confirmPassword"
+        render={({ field }) => (
+          <AppInput
+            label="Confirm Password"
+            value={field.value || ""}
+            onChangeText={field.onChange}
+            secureTextEntry
+            error={errors.confirmPassword?.message}
+            placeholder="Confirm Password"
+          />
+        )}
+      />
+
       <PrimaryButton
         title={signupMutation.isPending ? "Please wait..." : "Create Account"}
         onPress={handleSubmit(onSubmit)}
