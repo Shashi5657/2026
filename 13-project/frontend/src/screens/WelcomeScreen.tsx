@@ -87,10 +87,15 @@ const WelcomeScreen = () => {
         >
           <PrimaryButton
             title="Create Account"
+            variant="primary"
             onPress={() => router.push("/signup")}
           />
 
-          <PrimaryButton title="Login" onPress={() => router.push("/login")} />
+          <PrimaryButton
+            title="Login"
+            variant="secondary"
+            onPress={() => router.push("/login")}
+          />
         </View>
       </View>
     </SafeAreaView>

@@ -1,19 +1,32 @@
-import { Text } from "react-native";
+import React, { useRef } from "react";
+
+import { Text, TouchableOpacity, TextInput } from "react-native";
+
+import { router } from "expo-router";
 
 import { Controller, useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import Toast from "react-native-toast-message";
+
+import ScreenContainer from "@/components/common/ScreenContainer";
+import AppInput from "@/components/common/AppInput";
+
+import AuthHeader from "@/components/auth/AuthHeader";
+
 import { loginSchema, LoginFormData } from "@/schemas/loginSchema";
 
 import { useLogin } from "@/hooks/useLogin";
-import PrimaryButton from "@/components/PrimaryButton";
-import { SafeAreaView } from "react-native-safe-area-context";
+
 import { saveAccessToken } from "@/services/authStorage";
-import { router } from "expo-router";
-import AppInput from "@/components/common/AppInput";
+
+import { colors } from "@/theme/colors";
+import PrimaryButton from "@/components/PrimaryButton";
 
 export default function LoginScreen() {
+  const passwordRef = useRef<TextInput>(null);
+
   const loginMutation = useLogin();
 
   const {
@@ -27,35 +40,31 @@ export default function LoginScreen() {
   const onSubmit = (data: LoginFormData) => {
     loginMutation.mutate(data, {
       onSuccess: async (response) => {
-        const token = response.data.accessToken;
+        await saveAccessToken(response.data.accessToken);
 
-        await saveAccessToken(token);
+        Toast.show({
+          type: "success",
+          text1: "Login Successful",
+        });
 
         router.replace("/dashboard");
       },
 
-      onError: (error) => {
-        console.log(error);
+      onError: (error: any) => {
+        Toast.show({
+          type: "error",
+          text1: error?.response?.data?.message || "Something went wrong",
+        });
       },
     });
   };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        padding: 24,
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 32,
-          fontWeight: "700",
-          marginBottom: 30,
-        }}
-      >
-        Welcome Back
-      </Text>
+    <ScreenContainer>
+      <AuthHeader
+        title="Welcome Back 👋"
+        subtitle="Login to continue your journey."
+      />
 
       <Controller
         control={control}
@@ -69,6 +78,8 @@ export default function LoginScreen() {
             keyboardType="email-address"
             autoCapitalize="none"
             leftIcon="mail-outline"
+            returnKeyType="next"
+            onSubmitEditing={() => passwordRef.current?.focus()}
             error={errors.email?.message}
           />
         )}
@@ -79,12 +90,14 @@ export default function LoginScreen() {
         name="password"
         render={({ field }) => (
           <AppInput
+            ref={passwordRef}
             label="Password"
             placeholder="Enter password"
             value={field.value}
             onChangeText={field.onChange}
             secureTextEntry
             leftIcon="lock-closed-outline"
+            returnKeyType="done"
             error={errors.password?.message}
           />
         )}
@@ -92,10 +105,29 @@ export default function LoginScreen() {
 
       <PrimaryButton
         title="Login"
-        variant="secondary"
         loading={loginMutation.isPending}
         onPress={handleSubmit(onSubmit)}
       />
-    </SafeAreaView>
+
+      <TouchableOpacity
+        style={{
+          marginTop: 20,
+          alignSelf: "center",
+        }}
+        onPress={() => router.push("/signup")}
+      >
+        <Text>
+          Don't have an account?{" "}
+          <Text
+            style={{
+              color: colors.primary,
+              fontWeight: "600",
+            }}
+          >
+            Sign Up
+          </Text>
+        </Text>
+      </TouchableOpacity>
+    </ScreenContainer>
   );
 }
