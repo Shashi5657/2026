@@ -1,3 +1,2 @@
-export default function Signup() {
-  return null;
-}
+import SignupScreen from "@/screens/signupScreen";
+export default SignupScreen;

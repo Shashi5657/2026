@@ -38,8 +38,10 @@ export default function LoginScreen() {
   });
 
   const onSubmit = (data: LoginFormData) => {
+    console.log("FORM DATA", data);
     loginMutation.mutate(data, {
       onSuccess: async (response) => {
+        console.log("entered");
         await saveAccessToken(response.data.accessToken);
 
         Toast.show({
@@ -51,6 +53,11 @@ export default function LoginScreen() {
       },
 
       onError: (error: any) => {
+        console.log(
+          "LOGIN ERROR",
+          JSON.stringify(error?.response?.data, null, 2),
+        );
+        console.log(error);
         Toast.show({
           type: "error",
           text1: error?.response?.data?.message || "Something went wrong",

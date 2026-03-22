@@ -1,3 +1,3 @@
-export default function Login() {
-  return null;
-}
+import LoginScreen from "@/screens/loginScreen";
+
+export default LoginScreen;

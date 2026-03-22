@@ -1,4 +1,4 @@
-import { Text } from "react-native";
+import { Text, TextInput } from "react-native";
 
 import { Controller, useForm } from "react-hook-form";
 
@@ -6,13 +6,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { loginSchema, LoginFormData } from "@/schemas/loginSchema";
 
-import { AppInput } from "@/components/common/AppInput";
 import PrimaryButton from "@/components/PrimaryButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSignup } from "@/hooks/useSignup";
 import { SignupFormData, signupSchema } from "@/schemas/signupSchema";
+import AppInput from "@/components/common/AppInput";
+import { useRef } from "react";
+import Toast from "react-native-toast-message";
+import { router } from "expo-router";
 
 export default function SignupScreen() {
+  const emailRef = useRef<TextInput>(null);
+  const passwordRef = useRef<TextInput>(null);
+  const confirmPasswordRef = useRef<TextInput>(null);
   const signupMutation = useSignup();
 
   const {
@@ -26,6 +32,11 @@ export default function SignupScreen() {
   const onSubmit = (data: SignupFormData) => {
     signupMutation.mutate(data, {
       onSuccess: (response) => {
+        Toast.show({
+          type: "success",
+          text1: "Account created successfully",
+        });
+        router.replace("/login");
         console.log(response);
       },
 
@@ -62,6 +73,8 @@ export default function SignupScreen() {
             onChangeText={field.onChange}
             error={errors.name?.message}
             placeholder="Full Name"
+            leftIcon="person-circle-outline"
+            returnKeyType="next"
           />
         )}
       />
@@ -71,11 +84,17 @@ export default function SignupScreen() {
         name="email"
         render={({ field }) => (
           <AppInput
+            ref={emailRef}
             label="Email"
-            value={field.value || ""}
+            placeholder="Enter email"
+            value={field.value}
             onChangeText={field.onChange}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            leftIcon="mail-outline"
+            returnKeyType="next"
+            onSubmitEditing={() => emailRef.current?.focus()}
             error={errors.email?.message}
-            placeholder="Email"
           />
         )}
       />
@@ -85,12 +104,15 @@ export default function SignupScreen() {
         name="password"
         render={({ field }) => (
           <AppInput
+            ref={passwordRef}
             label="Password"
+            placeholder="Enter Password"
             value={field.value || ""}
             onChangeText={field.onChange}
             secureTextEntry
+            leftIcon="lock-closed-outline"
+            returnKeyType="next"
             error={errors.password?.message}
-            placeholder="Password"
           />
         )}
       />
@@ -100,11 +122,15 @@ export default function SignupScreen() {
         name="confirmPassword"
         render={({ field }) => (
           <AppInput
+            ref={confirmPasswordRef}
             label="Confirm Password"
             value={field.value || ""}
             onChangeText={field.onChange}
             secureTextEntry
+            leftIcon="mail-outline"
+            returnKeyType="done"
             error={errors.confirmPassword?.message}
+            onSubmitEditing={() => confirmPasswordRef.current?.focus()}
             placeholder="Confirm Password"
           />
         )}

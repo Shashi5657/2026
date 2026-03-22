@@ -1,4 +1,4 @@
-import { colors, spacing, typography } from "@/theme";
+import { colors, commonStyles, spacing, typography } from "@/theme";
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 const { width } = Dimensions.get("window");
 
@@ -17,8 +17,7 @@ export default OnboardingItem;
 const styles = StyleSheet.create({
   container: {
     width,
-    justifyContent: "center",
-    alignItems: "center",
+    ...commonStyles.center,
     padding: 20,
   },
 
@@ -28,8 +27,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   title: {
-    fontSize: 28,
-    fontWeight: "700",
+    ...typography.h2,
     marginTop: 20,
   },
 

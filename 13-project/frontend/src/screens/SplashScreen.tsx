@@ -18,9 +18,7 @@ const SplashScreen = () => {
         source={require("../assets/images/skillforge_logo.png")}
         style={styles.logo}
       />
-
       <Text style={styles.title}>SkillForge</Text>
-
       <Text style={styles.subtitle}>Learn. Build. Grow.</Text>
     </View>
   );

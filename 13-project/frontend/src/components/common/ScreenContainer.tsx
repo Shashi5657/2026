@@ -1,7 +1,6 @@
 import React from "react";
 
 import {
-  SafeAreaView,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -10,6 +9,7 @@ import {
 
 import { colors } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type Props = {
   children: React.ReactNode;
