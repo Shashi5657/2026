@@ -10,6 +10,7 @@ import {
 import { colors } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { commonStyles } from "@/theme";
 
 type Props = {
   children: React.ReactNode;
@@ -19,8 +20,8 @@ export default function ScreenContainer({ children }: Props) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={commonStyles.flex1}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView
           keyboardShouldPersistTaps="handled"
@@ -38,11 +39,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-
-  flex: {
-    flex: 1,
-  },
-
   content: {
     padding: spacing.lg,
     flexGrow: 1,

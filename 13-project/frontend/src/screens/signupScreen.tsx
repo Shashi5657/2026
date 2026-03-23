@@ -4,16 +4,14 @@ import { Controller, useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { loginSchema, LoginFormData } from "@/schemas/loginSchema";
-
 import PrimaryButton from "@/components/PrimaryButton";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useSignup } from "@/hooks/useSignup";
 import { SignupFormData, signupSchema } from "@/schemas/signupSchema";
 import AppInput from "@/components/common/AppInput";
 import { useRef } from "react";
 import Toast from "react-native-toast-message";
 import { router } from "expo-router";
+import ScreenContainer from "@/components/common/ScreenContainer";
 
 export default function SignupScreen() {
   const emailRef = useRef<TextInput>(null);
@@ -47,12 +45,7 @@ export default function SignupScreen() {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        padding: 24,
-      }}
-    >
+    <ScreenContainer>
       <Text
         style={{
           fontSize: 32,
@@ -74,6 +67,7 @@ export default function SignupScreen() {
             error={errors.name?.message}
             placeholder="Full Name"
             leftIcon="person-circle-outline"
+            onSubmitEditing={() => emailRef.current?.focus()}
             returnKeyType="next"
           />
         )}
@@ -93,7 +87,7 @@ export default function SignupScreen() {
             autoCapitalize="none"
             leftIcon="mail-outline"
             returnKeyType="next"
-            onSubmitEditing={() => emailRef.current?.focus()}
+            onSubmitEditing={() => passwordRef.current?.focus()}
             error={errors.email?.message}
           />
         )}
@@ -112,6 +106,7 @@ export default function SignupScreen() {
             secureTextEntry
             leftIcon="lock-closed-outline"
             returnKeyType="next"
+            onSubmitEditing={() => confirmPasswordRef.current?.focus()}
             error={errors.password?.message}
           />
         )}
@@ -130,7 +125,6 @@ export default function SignupScreen() {
             leftIcon="mail-outline"
             returnKeyType="done"
             error={errors.confirmPassword?.message}
-            onSubmitEditing={() => confirmPasswordRef.current?.focus()}
             placeholder="Confirm Password"
           />
         )}
@@ -140,6 +134,6 @@ export default function SignupScreen() {
         title={signupMutation.isPending ? "Please wait..." : "Create Account"}
         onPress={handleSubmit(onSubmit)}
       />
-    </SafeAreaView>
+    </ScreenContainer>
   );
 }

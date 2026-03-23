@@ -15,6 +15,7 @@ import { colors } from "@/theme/colors";
 import { radius } from "@/theme/radius";
 import { spacing } from "@/theme/spacing";
 import { typography } from "@/theme/typography";
+import { commonStyles } from "@/theme";
 
 interface AppInputProps extends TextInputProps {
   label?: string;
@@ -73,39 +74,25 @@ const styles = StyleSheet.create({
 
   label: {
     marginBottom: spacing.sm,
-
     color: colors.textPrimary,
-
     fontWeight: "600",
-
     ...typography.body,
   },
 
   inputContainer: {
-    flexDirection: "row",
-
-    alignItems: "center",
-
+    ...commonStyles.row,
     borderWidth: 1,
-
     borderColor: colors.border,
-
     borderRadius: radius.md,
-
     paddingHorizontal: spacing.md,
-
     minHeight: 56,
-
     backgroundColor: colors.white,
   },
 
   input: {
     flex: 1,
-
     marginLeft: spacing.sm,
-
     color: colors.textPrimary,
-
     ...typography.body,
   },
 
@@ -115,9 +102,7 @@ const styles = StyleSheet.create({
 
   errorText: {
     color: colors.error,
-
     marginTop: spacing.xs,
-
     fontSize: 12,
   },
 });
