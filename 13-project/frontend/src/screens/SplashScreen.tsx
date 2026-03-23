@@ -2,14 +2,43 @@ import { Image, Text, View, StyleSheet } from "react-native";
 import { useEffect } from "react";
 import { router } from "expo-router";
 import { colors, spacing, typography } from "@/theme";
+import { useAuth } from "@/context/AuthContext";
+import { getAccessToken } from "@/services/authStorage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SplashScreen = () => {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      router.replace("/onboarding");
-    }, 2500);
+    const initializeApp = async () => {
+      try {
+        const token = await getAccessToken();
 
-    return () => clearTimeout(timer);
+        const onboardingCompleted = await AsyncStorage.getItem(
+          "onboardingCompleted",
+        );
+
+        setTimeout(() => {
+          if (token) {
+            router.replace("/(protected)/dashboard");
+
+            return;
+          }
+
+          if (onboardingCompleted === "true") {
+            router.replace("/welcome");
+
+            return;
+          }
+
+          router.replace("/onboarding");
+        }, 2000);
+      } catch (error) {
+        console.log("SPLASH ERROR", error);
+
+        router.replace("/welcome");
+      }
+    };
+
+    initializeApp();
   }, []);
 
   return (

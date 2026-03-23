@@ -23,11 +23,13 @@ import { saveAccessToken } from "@/services/authStorage";
 
 import { colors } from "@/theme/colors";
 import PrimaryButton from "@/components/PrimaryButton";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LoginScreen() {
   const passwordRef = useRef<TextInput>(null);
 
   const loginMutation = useLogin();
+  const { login } = useAuth();
 
   const {
     control,
@@ -42,14 +44,14 @@ export default function LoginScreen() {
     loginMutation.mutate(data, {
       onSuccess: async (response) => {
         console.log("entered");
-        await saveAccessToken(response.data.accessToken);
+        await login(response.data.accessToken, response.data.user);
 
         Toast.show({
           type: "success",
           text1: "Login Successful",
         });
 
-        router.replace("/dashboard");
+        router.replace("/(protected)/dashboard");
       },
 
       onError: (error: any) => {

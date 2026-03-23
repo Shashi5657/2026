@@ -4,9 +4,7 @@ export const loginApi = async (payload: {
   email: string;
   password: string;
 }) => {
-  console.log("LOGIN PAYLOAD", payload);
   const response = await axiosInstance.post("/auth/login", payload);
-  console.log("LOGIN RESPONSE", response.data);
   return response.data;
 };
 
