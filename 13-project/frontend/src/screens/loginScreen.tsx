@@ -51,7 +51,7 @@ export default function LoginScreen() {
           text1: "Login Successful",
         });
 
-        router.replace("/(protected)/dashboard");
+        router.replace("/(protected)/(tabs)/home");
       },
 
       onError: (error: any) => {

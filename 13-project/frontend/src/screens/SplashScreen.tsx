@@ -18,7 +18,7 @@ const SplashScreen = () => {
 
         setTimeout(() => {
           if (token) {
-            router.replace("/(protected)/dashboard");
+            router.replace("/(protected)/(tabs)/home");
 
             return;
           }
