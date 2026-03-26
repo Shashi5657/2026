@@ -6,6 +6,7 @@ import { errorHandler } from "./middlewares/errorHandler";
 import { swaggerSpec } from "./config/swagger";
 import swaggerUi from "swagger-ui-express";
 import authRoutes from "./routes/auth.route";
+import taskRoutes from "./routes/task.routes";
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.get("/health", (_, res) => {
 });
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/tasks", taskRoutes);
 
 app.all("/{*splat}", (req, res) => {
   res.status(404).json({

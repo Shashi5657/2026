@@ -15,6 +15,7 @@ model User {
   email     String   @unique
   password  String
   isActive  Boolean  @default(true)
+  tasks     Task[]
   role      Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -23,4 +24,16 @@ model User {
 enum Role{
   USER
   ADMIN
+}
+
+model Task {
+  id          String @id @default(uuid())
+  title       String
+  description String?
+  completed   Boolean @default(false)
+  userId      String
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  updatedAt   DateTime @updatedAt
 }
