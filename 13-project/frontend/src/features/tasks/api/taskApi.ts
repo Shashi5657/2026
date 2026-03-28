@@ -13,3 +13,13 @@ export const createTaskApi = async (payload: {
   const response = await axiosInstance.post("/tasks", payload);
   return response.data;
 };
+
+export const toggleTaskApi = async (taskId: string) => {
+  const response = await axiosInstance.patch(`/tasks/${taskId}/toggle`);
+  return response.data;
+};
+
+export const deleteTaskApi = async (taskId: string) => {
+  const response = await axiosInstance.delete(`/tasks/${taskId}`);
+  return response.data;
+};
