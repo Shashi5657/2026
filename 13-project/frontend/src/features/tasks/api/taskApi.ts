@@ -8,7 +8,7 @@ export const getTasksApi = async () => {
 
 export const createTaskApi = async (payload: {
   title: string;
-  description: string;
+  description?: string;
 }) => {
   const response = await axiosInstance.post("/tasks", payload);
   return response.data;

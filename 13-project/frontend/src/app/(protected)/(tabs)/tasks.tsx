@@ -1,13 +1,57 @@
-import { View, Text } from "react-native";
+import React, { useState } from "react";
 
-import { commonStyles } from "@/theme/commonStyles";
+import { FlatList, View, Text } from "react-native";
+
+import TaskItem from "@/features/tasks/components/TaskItem";
+
+import EmptyTasks from "@/features/tasks/components/EmptyTasks";
+
+import { useTasks } from "@/features/tasks/hooks/useTasks";
+
+import { spacing } from "@/theme/spacing";
+import { useDeletetasks } from "@/features/tasks/hooks/useDeleteTasks";
+import { useToggleTasks } from "@/features/tasks/hooks/useToggleTasks";
+import PrimaryButton from "@/components/PrimaryButton";
+import CreateTaskModal from "@/features/tasks/components/createTaskModel";
 
 export default function TasksScreen() {
-  return (
-    <View style={[commonStyles.flex1, commonStyles.center]}>
-      <Text>✅ No Tasks Yet</Text>
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-      <Text>Task Module Coming Soon</Text>
+  const { data, isLoading } = useTasks();
+
+  const deleteMutation = useDeletetasks();
+
+  const toggleMutation = useToggleTasks();
+
+  const tasks = data?.data ?? [];
+
+  return (
+    <View
+      style={{
+        flex: 1,
+
+        padding: spacing.lg,
+      }}
+    >
+      <PrimaryButton title="+ Add Task" onPress={() => setIsModalOpen(true)} />
+
+      <FlatList
+        data={tasks}
+        keyExtractor={(item) => item.id}
+        ListEmptyComponent={!isLoading ? EmptyTasks : null}
+        renderItem={({ item }) => (
+          <TaskItem
+            task={item}
+            onToggle={() => toggleMutation.mutate(item.id)}
+            onDelete={() => deleteMutation.mutate(item.id)}
+          />
+        )}
+      />
+
+      <CreateTaskModal
+        visible={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </View>
   );
 }
