@@ -22,6 +22,10 @@ export default function CreateTaskModal({ visible, onClose }: Props) {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(taskSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+    },
   });
 
   const onSubmit = (data: TaskFormData) => {
@@ -34,7 +38,7 @@ export default function CreateTaskModal({ visible, onClose }: Props) {
   };
 
   return (
-    <Modal>
+    <Modal visible={visible} animationType="slide" transparent>
       <View style={styles.overlay}>
         <View style={styles.container}>
           <Text style={styles.title}>Create Task</Text>
@@ -47,7 +51,7 @@ export default function CreateTaskModal({ visible, onClose }: Props) {
                 label="Title"
                 placeholder="Enter Task Title"
                 value={field.value}
-                onChange={field.onChange}
+                onChangeText={field.onChange}
                 error={errors?.title?.message}
               />
             )}

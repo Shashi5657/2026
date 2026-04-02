@@ -13,6 +13,7 @@ import { useDeletetasks } from "@/features/tasks/hooks/useDeleteTasks";
 import { useToggleTasks } from "@/features/tasks/hooks/useToggleTasks";
 import PrimaryButton from "@/components/PrimaryButton";
 import CreateTaskModal from "@/features/tasks/components/createTaskModel";
+import ScreenContainer from "@/components/common/ScreenContainer";
 
 export default function TasksScreen() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,32 +27,37 @@ export default function TasksScreen() {
   const tasks = data?.data ?? [];
 
   return (
-    <View
-      style={{
-        flex: 1,
+    <ScreenContainer>
+      <View
+        style={{
+          flex: 1,
 
-        padding: spacing.lg,
-      }}
-    >
-      <PrimaryButton title="+ Add Task" onPress={() => setIsModalOpen(true)} />
+          padding: spacing.lg,
+        }}
+      >
+        <PrimaryButton
+          title="+ Add Task"
+          onPress={() => setIsModalOpen(true)}
+        />
 
-      <FlatList
-        data={tasks}
-        keyExtractor={(item) => item.id}
-        ListEmptyComponent={!isLoading ? EmptyTasks : null}
-        renderItem={({ item }) => (
-          <TaskItem
-            task={item}
-            onToggle={() => toggleMutation.mutate(item.id)}
-            onDelete={() => deleteMutation.mutate(item.id)}
-          />
-        )}
-      />
+        <FlatList
+          data={tasks}
+          keyExtractor={(item) => item.id}
+          ListEmptyComponent={!isLoading ? EmptyTasks : null}
+          renderItem={({ item }) => (
+            <TaskItem
+              task={item}
+              onToggle={() => toggleMutation.mutate(item.id)}
+              onDelete={() => deleteMutation.mutate(item.id)}
+            />
+          )}
+        />
 
-      <CreateTaskModal
-        visible={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
-    </View>
+        <CreateTaskModal
+          visible={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      </View>
+    </ScreenContainer>
   );
 }
