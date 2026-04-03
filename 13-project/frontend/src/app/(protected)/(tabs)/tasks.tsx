@@ -35,14 +35,15 @@ export default function TasksScreen() {
           padding: spacing.lg,
         }}
       >
-        <PrimaryButton
-          title="+ Add Task"
-          onPress={() => setIsModalOpen(true)}
-        />
-
         <FlatList
           data={tasks}
           keyExtractor={(item) => item.id}
+          ListHeaderComponent={
+            <PrimaryButton
+              title="+ Add Task"
+              onPress={() => setIsModalOpen(true)}
+            />
+          }
           ListEmptyComponent={!isLoading ? EmptyTasks : null}
           renderItem={({ item }) => (
             <TaskItem

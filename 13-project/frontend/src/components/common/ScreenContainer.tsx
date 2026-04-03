@@ -23,12 +23,12 @@ export default function ScreenContainer({ children }: Props) {
         style={commonStyles.flex1}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <ScrollView
+        {/* <ScrollView
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={styles.content}
-        >
-          {children}
-        </ScrollView>
+        > */}
+        {children}
+        {/* </ScrollView> */}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
