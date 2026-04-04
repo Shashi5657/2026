@@ -6,14 +6,22 @@ import { Modal, StyleSheet, Text, View } from "react-native";
 import AppInput from "@/components/common/AppInput";
 import PrimaryButton from "@/components/PrimaryButton";
 import { colors, radius, spacing } from "@/theme";
+import { useUpdateTasks } from "../hooks/useUpdateTask";
+import { useEffect } from "react";
 
 type Props = {
   visible: boolean;
   onClose: () => void;
+  task?: {
+    id: string;
+    title: string;
+    description?: string;
+  };
 };
 
-export default function CreateTaskModal({ visible, onClose }: Props) {
+export default function CreateTaskModal({ visible, onClose, task }: Props) {
   const createTaskMutation = useCreateTasks();
+  const updateTaskMutation = useUpdateTasks();
 
   const {
     control,
@@ -23,12 +31,24 @@ export default function CreateTaskModal({ visible, onClose }: Props) {
   } = useForm({
     resolver: zodResolver(taskSchema),
     defaultValues: {
-      title: "",
-      description: "",
+      title: task?.title || "",
+      description: task?.description || "",
     },
   });
 
   const onSubmit = (data: TaskFormData) => {
+    if (task) {
+      updateTaskMutation.mutate(
+        { taskId: task.id, payload: data },
+        {
+          onSuccess: () => {
+            reset();
+            onClose();
+          },
+        },
+      );
+      return;
+    }
     createTaskMutation.mutate(data, {
       onSuccess: () => {
         reset();
@@ -37,11 +57,20 @@ export default function CreateTaskModal({ visible, onClose }: Props) {
     });
   };
 
+  useEffect(() => {
+    if (task) {
+      reset({
+        title: task?.title,
+        description: task?.description || "",
+      });
+    }
+  }, [task, reset]);
+
   return (
     <Modal visible={visible} animationType="slide" transparent>
       <View style={styles.overlay}>
         <View style={styles.container}>
-          <Text style={styles.title}>Create Task</Text>
+          <Text style={styles.title}>{task ? "Edit " : "Create "} Task</Text>
 
           <Controller
             control={control}
@@ -71,7 +100,7 @@ export default function CreateTaskModal({ visible, onClose }: Props) {
           />
 
           <PrimaryButton
-            title="Create Task"
+            title={task ? "Edit Task" : "Create Task"}
             loading={createTaskMutation.isPending}
             onPress={handleSubmit(onSubmit)}
           />

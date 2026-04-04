@@ -18,7 +18,7 @@ type Props = {
 
 export default function ScreenContainer({ children }: Props) {
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea, styles.content]}>
       <KeyboardAvoidingView
         style={commonStyles.flex1}
         behavior={Platform.OS === "ios" ? "padding" : "height"}

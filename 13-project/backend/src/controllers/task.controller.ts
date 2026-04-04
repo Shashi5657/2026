@@ -55,3 +55,17 @@ export const deleteTask = catchAsync(async (req: Request, res: Response) => {
     message: "Task deleted successfully",
   });
 });
+
+export const updateTask = catchAsync(async (req: Request, res: Response) => {
+  const result = await TaskService.updateTask(
+    req.params.id as string,
+    req.user.userId,
+    req.body,
+  );
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Task updated successfully",
+    data: result,
+  });
+});

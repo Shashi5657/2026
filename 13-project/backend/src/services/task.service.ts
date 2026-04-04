@@ -1,5 +1,6 @@
 import { prisma } from "../config/database";
 import { CreateTaskPayload } from "../types/task.type";
+import { AppError } from "../utils/AppError";
 
 export const createTask = async (paylod: CreateTaskPayload, userId: string) => {
   return prisma.task.create({
@@ -50,6 +51,32 @@ export const deleteTask = async (taskId: string, userId: string) => {
     where: {
       id: taskId,
       userId,
+    },
+  });
+};
+
+export const updateTask = async (
+  taskId: string,
+  userId: string,
+  paylod: { title: string; description?: string },
+) => {
+  const task = await prisma.task.findFirst({
+    where: {
+      id: taskId,
+      userId,
+    },
+  });
+
+  if (!task) {
+    throw new AppError(404, "Task not found");
+  }
+  return prisma.task.update({
+    where: {
+      id: taskId,
+    },
+    data: {
+      title: paylod.title,
+      description: paylod?.description,
     },
   });
 };

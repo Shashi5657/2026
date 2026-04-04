@@ -13,6 +13,8 @@ router.get("/", TaskController.getTasks);
 
 router.patch("/:id/toggle", TaskController.toggleTask);
 
+router.patch("/:id", TaskController.updateTask)
+
 router.delete("/:id", TaskController.deleteTask);
 
 export default router;

@@ -1,6 +1,8 @@
 import { View, Text, Pressable } from "react-native";
 
 import { Task } from "../types/task.types";
+import { colors, radius, spacing } from "@/theme";
+import { Ionicons } from "@expo/vector-icons";
 
 type Props = {
   task: Task;
@@ -8,14 +10,16 @@ type Props = {
   onToggle: () => void;
 
   onDelete: () => void;
+  onEdit: () => void;
 };
 
-export default function TaskItem({ task, onToggle, onDelete }: Props) {
+export default function TaskItem({ task, onToggle, onDelete, onEdit }: Props) {
   return (
     <View
       style={{
-        padding: 16,
-
+        padding: spacing.md,
+        borderRadius: radius.md,
+        marginBottom: spacing.md,
         borderBottomWidth: 1,
       }}
     >
@@ -23,24 +27,41 @@ export default function TaskItem({ task, onToggle, onDelete }: Props) {
         <Text
           style={{
             fontSize: 18,
+            textDecorationLine: task.completed ? "line-through" : "none",
+
+            color: task.completed ? colors.gray400 : colors.textPrimary,
           }}
         >
           {task.completed ? "☑" : "☐"} {task.title}
         </Text>
       </Pressable>
 
-      {task.description && <Text>{task.description}</Text>}
-
-      <Pressable onPress={onDelete}>
+      {!!task.description && (
         <Text
           style={{
-            color: "red",
-            marginTop: 8,
+            marginTop: 6,
+
+            color: colors.textSecondary,
           }}
         >
-          Delete
+          {task.description}
         </Text>
-      </Pressable>
+      )}
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "flex-end",
+          gap: 16,
+          marginTop: 12,
+        }}
+      >
+        <Pressable onPress={onEdit}>
+          <Ionicons name="create-outline" size={22} color={colors.primary} />
+        </Pressable>
+        <Pressable onPress={onDelete}>
+          <Ionicons name="trash-outline" size={22} color={colors.error} />
+        </Pressable>
+      </View>
     </View>
   );
 }
