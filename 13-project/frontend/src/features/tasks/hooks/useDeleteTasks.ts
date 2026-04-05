@@ -6,7 +6,30 @@ export const useDeletetasks = () => {
 
   return useMutation({
     mutationFn: deleteTaskApi,
-    onSuccess: () => {
+
+    onMutate: async (taskId: string) => {
+      await queryClient.cancelQueries({
+        queryKey: ["tasks"],
+      });
+
+      const previousTasks = await queryClient.getQueryData(["tasks"]);
+
+      queryClient.setQueryData(["tasks"], (old: any) => {
+        if (!old?.data) return old;
+
+        return {
+          ...old,
+          data: old.data.filter((task: any) => task.id !== taskId),
+        };
+      });
+
+      return { previousTasks };
+    },
+
+    onError: (error, variables, context) => {
+      queryClient.setQueryData(["tasks"], context?.previousTasks);
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: ["tasks"],
       });
