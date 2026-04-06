@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { FlatList, View, Text, RefreshControl, Pressable } from "react-native";
 
@@ -17,11 +17,14 @@ import ScreenContainer from "@/components/common/ScreenContainer";
 import TaskSkeleton from "@/components/tasks/TaskSkeleton";
 import { colors } from "@/theme";
 import { Task } from "@/features/tasks/types/task.types";
+import TaskStats from "@/features/tasks/components/TaskStats";
+import TaskSearch from "@/features/tasks/components/TaskSearch";
 
 export default function TasksScreen() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState<"all" | "pending" | "completed">("all");
   const [selectedTask, setSelectedTask] = useState<any>(null);
+  const [search, setSearch] = useState("");
 
   const { data, isLoading, refetch, isRefetching } = useTasks();
 
@@ -30,17 +33,32 @@ export default function TasksScreen() {
   const toggleMutation = useToggleTasks();
 
   const tasks = data?.data ?? [];
+  const { totalTasks, completedTasks, pendingTasks } = useMemo(() => {
+    return {
+      totalTasks: tasks.length,
 
-  const filteredTasks = tasks.filter((task: Task) => {
-    if (filter === "pending") {
-      return !task.completed;
-    }
-    if (filter === "completed") {
-      return task.completed;
-    }
+      completedTasks: tasks.filter((task: Task) => task.completed).length,
 
-    return true;
-  });
+      pendingTasks: tasks.filter((task: Task) => !task.completed).length,
+    };
+  }, [tasks]);
+
+  const filteredTasks = useMemo(() => {
+    return tasks.filter((task: Task) => {
+      const matchesFilter =
+        filter === "all"
+          ? true
+          : filter === "completed"
+            ? task.completed
+            : !task.completed;
+
+      const matchesSearch = task.title
+        .toLowerCase()
+        .includes(search.toLowerCase());
+
+      return matchesFilter && matchesSearch;
+    });
+  }, [tasks, filter, search]);
 
   if (isLoading) {
     return (
@@ -57,6 +75,12 @@ export default function TasksScreen() {
           flex: 1,
         }}
       >
+        <TaskStats
+          completed={completedTasks}
+          total={totalTasks}
+          pending={pendingTasks}
+        />
+        <TaskSearch value={search} onChangeText={setSearch} />
         <View
           style={{
             flexDirection: "row",
