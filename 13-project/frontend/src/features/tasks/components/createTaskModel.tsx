@@ -2,12 +2,13 @@ import { Controller, useForm } from "react-hook-form";
 import { useCreateTasks } from "../hooks/useCreateTasks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TaskFormData, taskSchema } from "../schema/taskSchema";
-import { Modal, StyleSheet, Text, View } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import AppInput from "@/components/common/AppInput";
 import PrimaryButton from "@/components/PrimaryButton";
 import { colors, radius, spacing } from "@/theme";
 import { useUpdateTasks } from "../hooks/useUpdateTask";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   visible: boolean;
@@ -16,10 +17,12 @@ type Props = {
     id: string;
     title: string;
     description?: string;
+    dueDate?: string;
   };
 };
 
 export default function CreateTaskModal({ visible, onClose, task }: Props) {
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const createTaskMutation = useCreateTasks();
   const updateTaskMutation = useUpdateTasks();
 
@@ -33,6 +36,7 @@ export default function CreateTaskModal({ visible, onClose, task }: Props) {
     defaultValues: {
       title: task?.title || "",
       description: task?.description || "",
+      dueDate: task?.dueDate || "",
     },
   });
 
@@ -96,6 +100,42 @@ export default function CreateTaskModal({ visible, onClose, task }: Props) {
                 value={field.value}
                 onChangeText={field.onChange}
               />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="dueDate"
+            render={({ field }) => (
+              <>
+                <Text style={{ marginBottom: 8, fontWeight: "600" }}>
+                  Due Date
+                </Text>
+                <Pressable
+                  onPress={() => setShowDatePicker(true)}
+                  style={{ borderWidth: 1, padding: 14, borderRadius: 12 }}
+                >
+                  <Text>
+                    {field.value
+                      ? new Date(field.value).toDateString()
+                      : "Select due date"}
+                  </Text>
+
+                  {showDatePicker && (
+                    <DateTimePicker
+                      value={field.value ? new Date(field.value) : new Date()}
+                      mode="date"
+                      onChange={(event, selectedDate) => {
+                        setShowDatePicker(false);
+
+                        if (selectedDate) {
+                          field.onChange(selectedDate.toISOString());
+                        }
+                      }}
+                    />
+                  )}
+                </Pressable>
+              </>
             )}
           />
 

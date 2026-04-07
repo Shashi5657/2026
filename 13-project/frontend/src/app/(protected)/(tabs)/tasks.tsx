@@ -25,6 +25,9 @@ export default function TasksScreen() {
   const [filter, setFilter] = useState<"all" | "pending" | "completed">("all");
   const [selectedTask, setSelectedTask] = useState<any>(null);
   const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState<
+    "oldest" | "newest" | "dueDate" | "completed"
+  >("newest");
 
   const { data, isLoading, refetch, isRefetching } = useTasks();
 

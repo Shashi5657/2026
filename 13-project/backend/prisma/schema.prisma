@@ -31,6 +31,7 @@ model Task {
   title       String
   description String?
   completed   Boolean @default(false)
+  dueDate     DateTime?
   userId      String
   user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
