@@ -2,13 +2,13 @@ import { Controller, useForm } from "react-hook-form";
 import { useCreateTasks } from "../hooks/useCreateTasks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TaskFormData, taskSchema } from "../schema/taskSchema";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import AppInput from "@/components/common/AppInput";
 import PrimaryButton from "@/components/PrimaryButton";
 import { colors, radius, spacing } from "@/theme";
 import { useUpdateTasks } from "../hooks/useUpdateTask";
 import { useEffect, useState } from "react";
+import RNDateTimePicker from "@react-native-community/datetimepicker";
 
 type Props = {
   visible: boolean;
@@ -107,7 +107,7 @@ export default function CreateTaskModal({ visible, onClose, task }: Props) {
             control={control}
             name="dueDate"
             render={({ field }) => (
-              <>
+              <View style={{ marginBottom: 16 }}>
                 <Text style={{ marginBottom: 8, fontWeight: "600" }}>
                   Due Date
                 </Text>
@@ -122,9 +122,10 @@ export default function CreateTaskModal({ visible, onClose, task }: Props) {
                   </Text>
 
                   {showDatePicker && (
-                    <DateTimePicker
+                    <RNDateTimePicker
                       value={field.value ? new Date(field.value) : new Date()}
                       mode="date"
+                      style={{ borderColor: colors.border }}
                       onChange={(event, selectedDate) => {
                         setShowDatePicker(false);
 
@@ -135,7 +136,7 @@ export default function CreateTaskModal({ visible, onClose, task }: Props) {
                     />
                   )}
                 </Pressable>
-              </>
+              </View>
             )}
           />
 

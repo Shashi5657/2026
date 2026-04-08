@@ -19,6 +19,7 @@ import { colors } from "@/theme";
 import { Task } from "@/features/tasks/types/task.types";
 import TaskStats from "@/features/tasks/components/TaskStats";
 import TaskSearch from "@/features/tasks/components/TaskSearch";
+import TaskSort from "@/features/tasks/components/TaskSort";
 
 export default function TasksScreen() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -63,6 +64,34 @@ export default function TasksScreen() {
     });
   }, [tasks, filter, search]);
 
+  const sortedTasks = useMemo(() => {
+    const result = [...filteredTasks];
+
+    switch (sortBy) {
+      case "oldest":
+        return result.sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+        );
+
+      case "dueDate":
+        return result.sort(
+          (a, b) =>
+            new Date(a.dueDate || "9999").getTime() -
+            new Date(b.dueDate || "9999").getTime(),
+        );
+
+      case "completed":
+        return result.sort((a, b) => Number(b.completed) - Number(a.completed));
+
+      default:
+        return result.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        );
+    }
+  }, [filteredTasks, sortBy]);
+
   if (isLoading) {
     return (
       <View style={{ padding: 32 }}>
@@ -84,6 +113,8 @@ export default function TasksScreen() {
           pending={pendingTasks}
         />
         <TaskSearch value={search} onChangeText={setSearch} />
+
+        <TaskSort value={sortBy} onChange={setSortBy} />
         <View
           style={{
             flexDirection: "row",
@@ -116,7 +147,7 @@ export default function TasksScreen() {
           ))}
         </View>
         <FlatList
-          data={filteredTasks}
+          data={sortedTasks}
           keyExtractor={(item) => item.id}
           ListHeaderComponent={
             <PrimaryButton

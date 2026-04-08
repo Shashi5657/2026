@@ -47,6 +47,17 @@ export default function TaskItem({ task, onToggle, onDelete, onEdit }: Props) {
           {task.description}
         </Text>
       )}
+
+      {task.dueDate && (
+        <Text
+          style={{
+            marginTop: 6,
+            color: "#64748B",
+          }}
+        >
+          📅 {new Date(task.dueDate).toDateString()}
+        </Text>
+      )}
       <View
         style={{
           flexDirection: "row",
