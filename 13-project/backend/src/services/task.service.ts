@@ -8,6 +8,7 @@ export const createTask = async (paylod: CreateTaskPayload, userId: string) => {
       title: paylod.title,
       description: paylod.description,
       dueDate: paylod.dueDate,
+      category: paylod.category,
       userId,
     },
   });
@@ -59,7 +60,12 @@ export const deleteTask = async (taskId: string, userId: string) => {
 export const updateTask = async (
   taskId: string,
   userId: string,
-  paylod: { title: string; description?: string; dueDate?: string },
+  paylod: {
+    title: string;
+    description?: string;
+    dueDate?: string;
+    category?: string;
+  },
 ) => {
   const task = await prisma.task.findFirst({
     where: {
@@ -79,6 +85,7 @@ export const updateTask = async (
       title: paylod.title,
       description: paylod?.description,
       dueDate: paylod?.dueDate,
+      category: paylod.category,
     },
   });
 };

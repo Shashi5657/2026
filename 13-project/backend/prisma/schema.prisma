@@ -32,9 +32,17 @@ model Task {
   description String?
   completed   Boolean @default(false)
   dueDate     DateTime?
+  category    String @default("General")
+  priority    Priority @default(MEDIUM)
   userId      String
   user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
 
   updatedAt   DateTime @updatedAt
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
 }

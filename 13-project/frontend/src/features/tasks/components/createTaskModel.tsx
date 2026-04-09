@@ -9,6 +9,7 @@ import { colors, radius, spacing } from "@/theme";
 import { useUpdateTasks } from "../hooks/useUpdateTask";
 import { useEffect, useState } from "react";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
+import CategorySelector from "./CategorySelector";
 
 type Props = {
   visible: boolean;
@@ -137,6 +138,14 @@ export default function CreateTaskModal({ visible, onClose, task }: Props) {
                   )}
                 </Pressable>
               </View>
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="category"
+            render={({ field }) => (
+              <CategorySelector value={field.value} onChange={field.onChange} />
             )}
           />
 

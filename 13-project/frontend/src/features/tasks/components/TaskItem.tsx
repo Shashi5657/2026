@@ -58,6 +58,16 @@ export default function TaskItem({ task, onToggle, onDelete, onEdit }: Props) {
           📅 {new Date(task.dueDate).toDateString()}
         </Text>
       )}
+
+      {task?.category && (
+        <Text
+          style={{
+            marginTop: 6,
+          }}
+        >
+          🏷 {task.category}
+        </Text>
+      )}
       <View
         style={{
           flexDirection: "row",

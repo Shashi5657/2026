@@ -4,6 +4,16 @@ export interface Task {
   description?: string;
   completed: boolean;
   dueDate?: string;
+  category?: string;
   createdAt: string;
   updatedAt: string;
 }
+
+export const TASK_CATEGORIES = [
+  "Development",
+  "Fitness",
+  "Learning",
+  "Personal",
+  "Work",
+  "Finance",
+];
