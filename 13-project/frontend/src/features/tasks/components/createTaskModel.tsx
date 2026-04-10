@@ -10,6 +10,7 @@ import { useUpdateTasks } from "../hooks/useUpdateTask";
 import { useEffect, useState } from "react";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import CategorySelector from "./CategorySelector";
+import PrioritySelector from "./PrioritySelector";
 
 type Props = {
   visible: boolean;
@@ -19,6 +20,7 @@ type Props = {
     title: string;
     description?: string;
     dueDate?: string;
+    priority?: "LOW" | "MEDIUM" | "HIGH";
   };
 };
 
@@ -38,6 +40,7 @@ export default function CreateTaskModal({ visible, onClose, task }: Props) {
       title: task?.title || "",
       description: task?.description || "",
       dueDate: task?.dueDate || "",
+      priority: task?.priority || "MEDIUM",
     },
   });
 
@@ -146,6 +149,14 @@ export default function CreateTaskModal({ visible, onClose, task }: Props) {
             name="category"
             render={({ field }) => (
               <CategorySelector value={field.value} onChange={field.onChange} />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="priority"
+            render={({ field }) => (
+              <PrioritySelector value={field.value} onChange={field.onChange} />
             )}
           />
 

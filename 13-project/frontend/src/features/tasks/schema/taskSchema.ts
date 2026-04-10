@@ -4,6 +4,7 @@ export const taskSchema = z.object({
   description: z.string().optional(),
   dueDate: z.string().optional(),
   category: z.string().optional(),
+  priority: z.enum(["LOW", "MEDIUM", "HIGH"]).optional(),
 });
 
 export type TaskFormData = z.infer<typeof taskSchema>;

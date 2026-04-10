@@ -23,6 +23,18 @@ export default function TaskItem({ task, onToggle, onDelete, onEdit }: Props) {
         borderBottomWidth: 1,
       }}
     >
+      <Text
+        style={{
+          marginBottom: 6,
+          fontWeight: "600",
+        }}
+      >
+        {task.priority === "HIGH" && "🔴 HIGH"}
+
+        {task.priority === "MEDIUM" && "🟡 MEDIUM"}
+
+        {task.priority === "LOW" && "🟢 LOW"}
+      </Text>
       <Pressable onPress={onToggle}>
         <Text
           style={{
