@@ -11,7 +11,7 @@ export default function GreetingCard({ name }: { name?: string }) {
       }}
     >
       <Text style={{ ...typography.h2, color: colors.white }}>
-        Hello ${name}
+        Hello {name}
       </Text>
       <Text
         style={{

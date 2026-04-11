@@ -7,22 +7,71 @@ import StatCard from "@/components/dashboard/StatCard";
 import SectionHeader from "@/components/dashboard/SectionHeader";
 import QuickActionCards from "@/components/dashboard/QuickActionCard";
 import { commonStyles, spacing } from "@/theme";
+import { useTasks } from "@/features/tasks/hooks/useTasks";
+import { useTaskAnalytics } from "@/features/tasks/hooks/useTaskAnalytics";
+import TaskAnalyticsCard from "@/features/tasks/components/TaskAnalyticsCard";
+import { Task } from "@/features/tasks/types/task.types";
 
 export default function HomeScreen() {
   const { user } = useAuth();
+  const { data } = useTasks();
+  const tasks = data?.data || [];
+  const { totalTasks, completedTasks, highPriorityTasks, dueTodayTasks } =
+    useTaskAnalytics(tasks);
+  const todaysFocus = tasks.filter(
+    (task: Task) => !task.completed && task.priority === "HIGH",
+  );
 
   return (
     <ScreenContainer>
       <GreetingCard name={user?.name} />
       <View
-        style={[commonStyles.row, { gap: spacing.md, marginTop: spacing.lg }]}
+        style={{
+          flexDirection: "row",
+
+          gap: 12,
+
+          marginTop: 16,
+        }}
       >
-        <StatCard title="Courses" value={0} />
-        <StatCard title="Tasks" value={0} />
-        <StatCard title="Streak" value={0} />
+        <TaskAnalyticsCard title="Tasks" value={totalTasks} emoji="📋" />
+
+        <TaskAnalyticsCard
+          title="Completed"
+          value={completedTasks}
+          emoji="✅"
+        />
+      </View>
+
+      <View
+        style={{
+          flexDirection: "row",
+
+          gap: 12,
+
+          marginTop: 12,
+        }}
+      >
+        <TaskAnalyticsCard
+          title="High Priority"
+          value={highPriorityTasks}
+          emoji="🔥"
+        />
+
+        <TaskAnalyticsCard title="Due Today" value={dueTodayTasks} emoji="⏳" />
       </View>
       <View style={{ marginTop: spacing.xl }}>
         <SectionHeader title="Quick Action" />
+        {todaysFocus.slice(0, 3).map((task: Task) => (
+          <Text
+            key={task.id}
+            style={{
+              marginTop: 8,
+            }}
+          >
+            🔥 {task.title}
+          </Text>
+        ))}
       </View>
 
       <View
