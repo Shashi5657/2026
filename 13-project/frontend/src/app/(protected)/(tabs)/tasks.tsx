@@ -1,5 +1,11 @@
 import React, { useMemo, useState } from "react";
 
+export const isOverdue = (dueDate?: string) => {
+  if (!dueDate) return false;
+
+  return new Date(dueDate) < new Date();
+};
+
 import { FlatList, View, Text, RefreshControl, Pressable } from "react-native";
 
 import TaskItem from "@/features/tasks/components/TaskItem";
@@ -20,6 +26,8 @@ import { Task } from "@/features/tasks/types/task.types";
 import TaskStats from "@/features/tasks/components/TaskStats";
 import TaskSearch from "@/features/tasks/components/TaskSearch";
 import TaskSort from "@/features/tasks/components/TaskSort";
+import CategoryFilter from "@/features/tasks/components/CategoryFilter";
+import PriorityFilter from "@/features/tasks/components/PriorityFilter";
 
 export default function TasksScreen() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,6 +37,8 @@ export default function TasksScreen() {
   const [sortBy, setSortBy] = useState<
     "oldest" | "newest" | "dueDate" | "completed"
   >("newest");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedPriority, setSelectedPriority] = useState("ALL");
 
   const { data, isLoading, refetch, isRefetching } = useTasks();
 
@@ -60,9 +70,17 @@ export default function TasksScreen() {
         .toLowerCase()
         .includes(search.toLowerCase());
 
-      return matchesFilter && matchesSearch;
+      const matchesCategory =
+        selectedCategory === "All" ? true : task.category === selectedCategory;
+
+      const matchesPriority =
+        selectedPriority === "ALL" ? true : task.priority === selectedPriority;
+
+      return (
+        matchesFilter && matchesSearch && matchesCategory && matchesPriority
+      );
     });
-  }, [tasks, filter, search]);
+  }, [tasks, filter, search, selectedCategory, selectedPriority]);
 
   const sortedTasks = useMemo(() => {
     const result = [...filteredTasks];
@@ -112,6 +130,15 @@ export default function TasksScreen() {
           total={totalTasks}
           pending={pendingTasks}
         />
+        <CategoryFilter
+          value={selectedCategory}
+          onChange={setSelectedCategory}
+        />
+
+        <PriorityFilter
+          value={selectedPriority}
+          onChange={setSelectedPriority}
+        />
         <TaskSearch value={search} onChangeText={setSearch} />
 
         <TaskSort value={sortBy} onChange={setSortBy} />
@@ -159,7 +186,16 @@ export default function TasksScreen() {
               }}
             />
           }
-          ListEmptyComponent={!isLoading ? EmptyTasks : null}
+          ListEmptyComponent={
+            !isLoading ? (
+              <EmptyTasks
+                onCreateTask={() => {
+                  setSelectedTask(null);
+                  setIsModalOpen(true);
+                }}
+              />
+            ) : null
+          }
           renderItem={({ item }) => (
             <TaskItem
               task={item}

@@ -13,6 +13,12 @@ type Props = {
   onEdit: () => void;
 };
 
+export const isOverdue = (dueDate?: string) => {
+  if (!dueDate) return false;
+
+  return new Date(dueDate) < new Date();
+};
+
 export default function TaskItem({ task, onToggle, onDelete, onEdit }: Props) {
   return (
     <View
@@ -68,6 +74,17 @@ export default function TaskItem({ task, onToggle, onDelete, onEdit }: Props) {
           }}
         >
           📅 {new Date(task.dueDate).toDateString()}
+        </Text>
+      )}
+
+      {task.dueDate && !task.completed && isOverdue(task.dueDate) && (
+        <Text
+          style={{
+            color: "red",
+            marginTop: 4,
+          }}
+        >
+          ⚠️ Overdue
         </Text>
       )}
 

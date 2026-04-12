@@ -16,8 +16,13 @@ export default function HomeScreen() {
   const { user } = useAuth();
   const { data } = useTasks();
   const tasks = data?.data || [];
-  const { totalTasks, completedTasks, highPriorityTasks, dueTodayTasks } =
-    useTaskAnalytics(tasks);
+  const {
+    totalTasks,
+    completedTasks,
+    highPriorityTasks,
+    dueTodayTasks,
+    overdueTasks,
+  } = useTaskAnalytics(tasks);
   const todaysFocus = tasks.filter(
     (task: Task) => !task.completed && task.priority === "HIGH",
   );
@@ -41,6 +46,8 @@ export default function HomeScreen() {
           value={completedTasks}
           emoji="✅"
         />
+
+        <TaskAnalyticsCard title="Overdue" value={overdueTasks} emoji="⚠️" />
       </View>
 
       <View

@@ -24,12 +24,19 @@ export const useTaskAnalytics = (tasks: Task[]) => {
       return today.toDateString() === dueDate.toDateString();
     }).length;
 
+    const overdueTasks = tasks.filter((task) => {
+      if (!task.dueDate || task.completed) return false;
+
+      return new Date(task.dueDate) < new Date();
+    }).length;
+
     return {
       totalTasks,
       completedTasks,
       pendingTasks,
       highPriorityTasks,
       dueTodayTasks,
+      overdueTasks,
     };
   }, [tasks]);
 };
