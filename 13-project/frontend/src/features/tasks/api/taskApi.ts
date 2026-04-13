@@ -37,3 +37,8 @@ export const updateTaskApi = async ({
   const response = await axiosInstance.patch(`/tasks/${taskId}`, payload);
   return response.data;
 };
+
+export const getTaskByIdApi = async (taskId: string) => {
+  const response = await axiosInstance.get(`tasks/${taskId}`);
+  return response.data;
+};

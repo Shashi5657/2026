@@ -89,3 +89,18 @@ export const updateTask = async (
     },
   });
 };
+
+export const getTaskById = async (taskId: string, userId: string) => {
+  const task = await prisma.task.findFirst({
+    where: {
+      id: taskId,
+      userId,
+    },
+  });
+
+  if (!task) {
+    throw new AppError(400, "Task not found");
+  }
+
+  return task;
+};

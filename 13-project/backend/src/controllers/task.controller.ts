@@ -69,3 +69,17 @@ export const updateTask = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+
+export const getTaskById = catchAsync(async (req: Request, res: Response) => {
+  const result = await TaskService.getTaskById(
+    req.params.id as string,
+    req.body,
+  );
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Task details fetched successfully",
+    data: result,
+  });
+});

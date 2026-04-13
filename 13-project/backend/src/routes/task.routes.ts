@@ -11,6 +11,8 @@ router.post("/", TaskController.createTask);
 
 router.get("/", TaskController.getTasks);
 
+router.get("/:id", TaskController.getTaskById)
+
 router.patch("/:id/toggle", TaskController.toggleTask);
 
 router.patch("/:id", TaskController.updateTask)
