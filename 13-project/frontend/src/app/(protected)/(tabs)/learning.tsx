@@ -1,11 +1,23 @@
-import { View, Text } from "react-native";
+import { FlatList, View } from "react-native";
 
-import { commonStyles } from "@/theme/commonStyles";
+import CourseCard from "@/features/learning/components/CourseCard";
+import { courses } from "@/features/learning/data/courses";
+import ScreenContainer from "@/components/common/ScreenContainer";
 
 export default function LearningScreen() {
   return (
-    <View style={[commonStyles.flex1, commonStyles.center]}>
-      <Text>📚 Learning Module Coming Soon</Text>
-    </View>
+    <ScreenContainer>
+      <FlatList
+        data={courses}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <CourseCard
+            id={item.id}
+            title={item.title}
+            lessonCount={item.lessons?.length || 0}
+          />
+        )}
+      />
+    </ScreenContainer>
   );
 }

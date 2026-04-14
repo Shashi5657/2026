@@ -1,3 +1,4 @@
+import ScreenContainer from "@/components/common/ScreenContainer";
 import { useTask } from "@/features/tasks/hooks/useTask";
 import { useLocalSearchParams } from "expo-router";
 import { Text, View } from "react-native";
@@ -12,12 +13,7 @@ export default function TaskDetailsScreen() {
   if (!task) return null;
 
   return (
-    <View
-      style={{
-        flex: 1,
-        padding: 20,
-      }}
-    >
+    <ScreenContainer>
       <Text
         style={{
           fontSize: 28,
@@ -56,6 +52,6 @@ export default function TaskDetailsScreen() {
       >
         🔥 {task.priority}
       </Text>
-    </View>
+    </ScreenContainer>
   );
 }
