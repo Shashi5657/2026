@@ -11,6 +11,7 @@ import { useTasks } from "@/features/tasks/hooks/useTasks";
 import { useTaskAnalytics } from "@/features/tasks/hooks/useTaskAnalytics";
 import TaskAnalyticsCard from "@/features/tasks/components/TaskAnalyticsCard";
 import { Task } from "@/features/tasks/types/task.types";
+import ContinueLearningCard from "@/features/learning/components/CountinueLearningCard";
 
 export default function HomeScreen() {
   const { user } = useAuth();
@@ -30,6 +31,8 @@ export default function HomeScreen() {
   return (
     <ScreenContainer>
       <GreetingCard name={user?.name} />
+
+      <ContinueLearningCard />
       <View
         style={{
           flexDirection: "row",

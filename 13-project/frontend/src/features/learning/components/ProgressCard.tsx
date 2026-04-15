@@ -1,3 +1,4 @@
+import ProgressBar from "@/components/common/ProgressBar";
 import { View, Text } from "react-native";
 
 type Props = {
@@ -10,30 +11,24 @@ export default function ProgressCard({ completed, total }: Props) {
 
   return (
     <View
-      style={{
-        backgroundColor: "#FFF",
-        padding: 16,
-        borderRadius: 12,
-        marginBottom: 16,
-      }}
+      style={
+        {
+          // backgroundColor: "#FFF",
+          // padding: 16,
+          // borderRadius: 12,
+          // marginBottom: 16,
+        }
+      }
     >
-      <Text
-        style={{
-          fontWeight: "700",
-        }}
-      >
-        Progress
-      </Text>
+      <ProgressBar progress={percentage} />
 
       <Text
         style={{
-          marginTop: 8,
+          marginTop: 10,
         }}
       >
-        {completed}/{total} lessons completed
+        {completed}/{total} Lessons
       </Text>
-
-      <Text>{percentage}%</Text>
     </View>
   );
 }

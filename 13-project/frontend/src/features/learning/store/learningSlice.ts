@@ -8,6 +8,8 @@ interface LearningState {
   bookmarks: string[];
 
   completedLessons: string[];
+
+  recentCourses: string[];
 }
 
 const initialState: LearningState = {
@@ -15,6 +17,7 @@ const initialState: LearningState = {
   currentLessonId: null,
   bookmarks: [],
   completedLessons: [],
+  recentCourses: [],
 };
 
 const learningSlice = createSlice({
@@ -41,6 +44,14 @@ const learningSlice = createSlice({
         state.completedLessons.push(action.payload);
       }
     },
+    updateRecentCourses(state, action: PayloadAction<string>) {
+      state.recentCourses = state.recentCourses.filter(
+        (id) => id !== action.payload,
+      );
+      state.recentCourses.unshift(action.payload);
+
+      state.recentCourses = state.recentCourses.slice(0, 5);
+    },
   },
 });
 
@@ -49,6 +60,7 @@ export const {
   setCurrentLesson,
   toggleBookmark,
   completeLesson,
+  updateRecentCourses,
 } = learningSlice.actions;
 
 export default learningSlice.reducer;

@@ -1,6 +1,6 @@
 import { Pressable, Text, View } from "react-native";
 
-import { completeLesson } from "../store/learningSlice";
+import { completeLesson, setCurrentLesson } from "../store/learningSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { toggleBookmark } from "../store/learningSlice";
 
@@ -24,7 +24,12 @@ export default function LessonItem({ lesson }: Props) {
   const isBookmarked = bookmarks.includes(lesson.id);
 
   return (
-    <Pressable onPress={() => dispatch(completeLesson(lesson.id))}>
+    <Pressable
+      onPress={() => {
+        dispatch(setCurrentLesson(lesson.id));
+        dispatch(completeLesson(lesson.id));
+      }}
+    >
       <View
         style={{
           padding: 16,
