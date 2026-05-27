@@ -1,0 +1,19 @@
+{
+  "name": "@10-frontend-auth/infra",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "alchemy dev",
+    "deploy": "alchemy deploy",
+    "destroy": "alchemy destroy"
+  },
+  "dependencies": {
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@10-frontend-auth/config": "workspace:*",
+    "alchemy": "catalog:"
+  }
+}

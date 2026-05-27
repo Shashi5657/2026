@@ -1,0 +1,3 @@
+{
+  "extends": "@10-frontend-auth/config/tsconfig.base.json",
+}

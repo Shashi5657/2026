@@ -1,0 +1,24 @@
+{
+  "name": "@10-frontend-auth/auth",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "type": "module",
+  "scripts": {},
+  "devDependencies": {
+    "typescript": "^5",
+    "@10-frontend-auth/config": "workspace:*"
+  },
+  "dependencies": {
+    "dotenv": "catalog:",
+    "zod": "catalog:",
+    "@10-frontend-auth/env": "workspace:*",
+    "@10-frontend-auth/db": "workspace:*",
+    "better-auth": "catalog:"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "@10-frontend-auth/api",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "type": "module",
+  "scripts": {},
+  "devDependencies": {
+    "typescript": "^5",
+    "@10-frontend-auth/config": "workspace:*",
+    "@types/express": "catalog:"
+  },
+  "dependencies": {
+    "dotenv": "catalog:",
+    "zod": "catalog:",
+    "@10-frontend-auth/env": "workspace:*",
+    "@10-frontend-auth/auth": "workspace:*",
+    "@10-frontend-auth/db": "workspace:*",
+    "@trpc/server": "catalog:",
+    "@trpc/client": "catalog:",
+    "better-auth": "catalog:",
+    "drizzle-orm": "catalog:"
+  }
+}

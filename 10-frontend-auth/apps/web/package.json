@@ -1,0 +1,47 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "dev:bare": "next dev --port 3001"
+  },
+  "dependencies": {
+    "@10-frontend-auth/ui": "workspace:*",
+    "lucide-react": "catalog:",
+    "next": "^16.2.0",
+    "next-themes": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "sonner": "catalog:",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "dotenv": "catalog:",
+    "zod": "catalog:",
+    "@10-frontend-auth/env": "workspace:*",
+    "@10-frontend-auth/api": "workspace:*",
+    "@10-frontend-auth/auth": "workspace:*",
+    "@libsql/client": "catalog:",
+    "libsql": "catalog:",
+    "@trpc/tanstack-react-query": "^11.13.4",
+    "@trpc/client": "catalog:",
+    "@trpc/server": "catalog:",
+    "@tanstack/react-query": "^5.90.12",
+    "better-auth": "catalog:",
+    "@tanstack/react-form": "^1.28.0",
+    "@opennextjs/cloudflare": "^1.17.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/node": "^20",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "^5",
+    "@10-frontend-auth/config": "workspace:*",
+    "@tanstack/react-query-devtools": "^5.91.1",
+    "alchemy": "catalog:",
+    "wrangler": "^4.77.0",
+    "@cloudflare/workers-types": "catalog:"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@10-frontend-auth/db",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {
+    "db:local": "turso dev --db-file local.db",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:studio": "drizzle-kit studio",
+    "db:migrate": "drizzle-kit migrate"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@10-frontend-auth/config": "workspace:*",
+    "drizzle-kit": "^0.31.8"
+  },
+  "dependencies": {
+    "dotenv": "catalog:",
+    "zod": "catalog:",
+    "@10-frontend-auth/env": "workspace:*",
+    "drizzle-orm": "catalog:",
+    "@libsql/client": "catalog:",
+    "libsql": "catalog:"
+  }
+}

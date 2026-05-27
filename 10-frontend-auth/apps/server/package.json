@@ -1,0 +1,33 @@
+{
+  "name": "server",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsdown",
+    "check-types": "tsc -b",
+    "compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
+    "dev": "bun run --hot src/index.ts",
+    "start": "bun run dist/index.mjs"
+  },
+  "dependencies": {
+    "dotenv": "catalog:",
+    "zod": "catalog:",
+    "@10-frontend-auth/env": "workspace:*",
+    "@10-frontend-auth/api": "workspace:*",
+    "@10-frontend-auth/auth": "workspace:*",
+    "@10-frontend-auth/db": "workspace:*",
+    "express": "^5.1.0",
+    "cors": "^2.8.5",
+    "@trpc/server": "catalog:",
+    "better-auth": "catalog:",
+    "@hono/trpc-server": "^0.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "tsdown": "^0.16.5",
+    "@10-frontend-auth/config": "workspace:*",
+    "@types/express": "catalog:",
+    "@types/cors": "^2.8.17",
+    "@types/bun": "catalog:"
+  }
+}
